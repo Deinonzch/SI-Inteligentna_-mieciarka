@@ -6,99 +6,840 @@ public class SpawnSmietniki : MonoBehaviour {
     public GameObject Smietniki1;
     public GameObject Smietniki2;
     public GameObject Smietniki3;
-    bool[,] plansza = { { false, false, false, false, false, false, false, false, false, false, false, false, false, false, false },
-                        { false, true, false, true, true, false, true, false, true, false, true, true, true, true, false },
-                        { false, true, false, false, false, false, false, false, true, false, false, false, false, true, false },
-                        { false, true, false, true, true, true, true, false, true, false, true, true, true, true, false },
-                        { false, false, false, false, false, false, false, false, false, false, false, false, false, false, false } };
-    
+    int[,] plansza1 = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                       { 0, -1, 0, -2, -1, 0, -2, 0, -1, 0, -2, -1, -1, -2, 0 },
+                       { 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0 },
+                       { 0, -1, 0, -2, -1, -1, -2, 0, -1, 0, -2, -1, -1, -2, 0 },
+                       { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
+
+    int[,] plansza2 = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                       { 0, -1, 0, -2, -1, 0, -2, 0, -1, 0, -2, -1, -1, -2, 0 },
+                       { 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0 },
+                       { 0, -1, 0, -2, -1, -1, -2, 0, -1, 0, -2, -1, -1, -2, 0 },
+                       { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
+
+    int[,] plansza3 = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                       { 0, -1, 0, -2, -1, 0, -2, 0, -1, 0, -2, -1, -1, -2, 0 },
+                       { 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0 },
+                       { 0, -1, 0, -2, -1, -1, -2, 0, -1, 0, -2, -1, -1, -2, 0 },
+                       { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
+
+    int[,] plansza4 = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                       { 0, -1, 0, -2, -1, 0, -2, 0, -1, 0, -2, -1, -1, -2, 0 },
+                       { 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0 },
+                       { 0, -1, 0, -2, -1, -1, -2, 0, -1, 0, -2, -1, -1, -2, 0 },
+                       { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
+
     // Use this for initialization
     void Start () {
         // Spawn food every 4 seconds, starting in 3
-        Generuj();
+        Spawn();
     }
 
-    // Spawn one piece of food
+    // Spawn
     void Spawn()
     {
+        int[,] plansza = AlgorythmGenetic();
+        //int[,] plansza = Generuj(plansza1);
+
+        for (int i = 0; i < 5; i++)
+            for (int j = 0; j < 15; j++)
+            {
+                if (plansza[i, j] == 1)
+                {
+                    // Instantiate the food at (x, y)
+                    Instantiate(Smietniki1,
+                                new Vector2(j-7, i),
+                                Quaternion.identity); // default rotation
+                }
+                if (plansza[i, j] == 2)
+                {
+                    // Instantiate the food at (x, y)
+                    Instantiate(Smietniki2,
+                                new Vector2(j-7,i),
+                                Quaternion.identity); // default rotation
+                }
+                if (plansza[i, j] == 3)
+                {
+                    // Instantiate the food at (x, y)
+                    Instantiate(Smietniki3,
+                                new Vector2(j-7, i),
+                                Quaternion.identity); // default rotation
+                }
+            }
+    }
+
+
+    //generowanie plansz
+    int[,] Generuj(int[,] plansza)
+    {
         // x position between left & right border
-        int x1 = (int)Random.Range(-7,
-                                  8);
+        int x1 = (int)Random.Range(0,
+                                  15);
 
         // y position between top & bottom border
         int y1 = (int)Random.Range(0,
                                   5);
 
-       while (plansza[y1,x1+7]==true)
+        while (plansza[y1, x1] != 0)
         {
             // x position between left & right border
-            x1 = (int)Random.Range(-7,
-                                     7);
+            x1 = (int)Random.Range(0,
+                                     15);
 
             // y position between top & bottom border
             y1 = (int)Random.Range(0,
-                                      4);
+                                      5);
         }
 
-        plansza[y1, x1 + 7] = true;
-        
+        plansza[y1, x1] = 1;
+
         // x position between left & right border
-        int x2 = (int)Random.Range(-7,
-                                  8);
+        int x2 = (int)Random.Range(0,
+                                  15);
 
         // y position between top & bottom border
         int y2 = (int)Random.Range(0,
                                   5);
 
-        while (plansza[y2, x2 + 7] == true)
+        while (plansza[y2, x2] != 0)
         {
             // x position between left & right border
-            x2 = (int)Random.Range(-7,
-                                     7);
+            x2 = (int)Random.Range(0,
+                                     15);
 
             // y position between top & bottom border
             y2 = (int)Random.Range(0,
-                                      4);
+                                      5);
         }
 
-        plansza[y2, x2 + 7] = true;
+        plansza[y2, x2] = 2;
 
         // x position between left & right border
-        int x3 = (int)Random.Range(-7,
-                                  8);
+        int x3 = (int)Random.Range(0,
+                                  15);
 
         // y position between top & bottom border
         int y3 = (int)Random.Range(0,
                                   5);
 
-        while (plansza[y3, x3 + 7] == true)
+        while (plansza[y3, x3] != 0)
         {
             // x position between left & right border
-            x3 = (int)Random.Range(-7,
-                                     7);
+            x3 = (int)Random.Range(0,
+                                     15);
 
             // y position between top & bottom border
             y3 = (int)Random.Range(0,
-                                      4);
+                                      5);
         }
 
-        plansza[y3, x3 + 7] = true;
+        plansza[y3, x3] = 3;
 
-        // Instantiate the food at (x, y)
-        Instantiate(Smietniki1,
-                    new Vector2(x1, y1),
-                    Quaternion.identity); // default rotation
-        Instantiate(Smietniki2,
-                    new Vector2(x2, y2),
-                    Quaternion.identity); // default rotation
-        Instantiate(Smietniki3,
-                    new Vector2(x3, y3),
-                    Quaternion.identity); // default rotation
+        return plansza;
+    }
+    
+    //Czy śmietnik jest przy parku
+    int Filtr1(int[,] gen)
+    {
+        int wynik = 0;
+        //drzewo[1,3]
+        if (gen[1, 2] == 1 || gen[1, 2] == 2 || gen[1, 2] == 3)
+            wynik++;
+        if (gen[2, 3] == 1 || gen[2, 3] == 2 || gen[2, 3] == 3) //+dzrewo[3,3]
+            wynik=wynik+2;
+        if (gen[0, 3] == 1 || gen[0, 3] == 2 || gen[0, 3] == 3)
+            wynik++;
+
+        //drzewo[1,6]
+        if (gen[1, 5] == 1 || gen[1, 5] == 2 || gen[1, 5] == 3)
+            wynik++;
+        if (gen[2, 6] == 1 || gen[2, 6] == 2 || gen[2, 6] == 3) //+dzrewo[3,6]
+            wynik = wynik + 2;
+        if (gen[1, 7] == 1 || gen[1, 7] == 2 || gen[1, 7] == 3)
+            wynik++;
+        if (gen[0, 6] == 1 || gen[0, 6] == 2 || gen[0, 6] == 3)
+            wynik++;
+
+        //drzewo[1,10]
+        if (gen[1, 9] == 1 || gen[1, 9] == 2 || gen[1, 9] == 3)
+            wynik++;
+        if (gen[2, 10] == 1 || gen[2, 10] == 2 || gen[2, 10] == 3) //+dzrewo[3,10]
+            wynik = wynik + 2;
+        if (gen[0, 10] == 1 || gen[0, 10] == 2 || gen[0, 10] == 3)
+            wynik++;
+
+        //drzewo[1,13]
+        if (gen[1, 14] == 1 || gen[1, 14] == 2 || gen[1, 14] == 3)
+            wynik++;
+        if (gen[0, 13] == 1 || gen[0, 13] == 2 || gen[0, 13] == 3)
+            wynik++;
+
+        //drzewo[3,3]
+        if (gen[3, 2] == 1 || gen[3, 2] == 2 || gen[3, 2] == 3)
+            wynik++;
+        if (gen[4, 3] == 1 || gen[4, 3] == 2 || gen[4, 3] == 3)
+            wynik++;
+
+        //drzewo[3,3]
+        if (gen[3, 2] == 1 || gen[3, 2] == 2 || gen[3, 2] == 3)
+            wynik++;
+        if (gen[4, 3] == 1 || gen[4, 3] == 2 || gen[4, 3] == 3)
+            wynik++;
+
+        //drzewo[3,6]
+        if (gen[4, 6] == 1 || gen[4, 6] == 2 || gen[4, 6] == 3)
+            wynik++;
+        if (gen[3, 7] == 1 || gen[3, 7] == 2 || gen[3, 7] == 3)
+            wynik++;
+
+        //drzewo[3,10]
+        if (gen[3, 9] == 1 || gen[3, 9] == 2 || gen[3, 9] == 3)
+            wynik++;
+        if (gen[4, 10] == 1 || gen[4, 10] == 2 || gen[4, 10] == 3)
+            wynik++;
+
+        //drzewo[3,13]
+        if (gen[4, 13] == 1 || gen[4, 13] == 2 || gen[4, 13] == 3)
+            wynik++;
+        if (gen[3, 14] == 1 || gen[3, 14] == 2 || gen[3, 14] == 3)
+            wynik++;
+
+        return wynik;
     }
 
-    void Generuj()
+    //Czy smietniki na plastik nie sa obok siebie
+    int Filtr2(int[,] gen)
     {
-        for (int i = 0; i < 3; i++)
-            Spawn();
+        int wynik = 0;
+
+        for(int i=0; i<5; i++)
+            for(int j=0; j<15; j++)
+            {
+                if(gen[i,j]==1)
+                {
+                    //spr top
+                    int top = i + 1;
+                    while (top <= i + 2 && top<5 && gen[top, j] != -1 && gen[top, j] != -2)
+                    {
+                         if (gen[top, j] == gen[i, j])
+                            wynik--;
+                        top++;
+                    }
+
+                    //spr bot
+                    int bot = i - 1;
+                    while (bot >= i - 2 && bot > -1 && gen[bot,j]!=-1 && gen[bot, j] != -2)
+                    {
+                        if (gen[bot, j] == gen[i, j])
+                            wynik--;
+                        bot--;
+                    }
+
+                    //spr left
+                    int left = j - 1;
+                    while (left >= j - 2 && left > -1 && gen[i, left] != -1 && gen[i, left] != -2)
+                    {
+                        if (gen[i, left] == gen[i, j])
+                            wynik--;
+                        left--;
+                    }
+
+                    //spr right
+                    int right = j + 1;
+                    while (right <= j + 2 && right < 15 && gen[i, right] != -1 && gen[i, right] != -2)
+                    {
+                        if (gen[i, right] == gen[i, j])
+                            wynik--;
+                        right++;
+                    }
+
+                }
+            }
+
+        return wynik;
+    }
+
+    //Czy smietniki na papier nie sa obok siebie
+    int Filtr3(int[,] gen)
+    {
+        int wynik = 0;
+
+        for (int i = 0; i < 5; i++)
+            for (int j = 0; j < 15; j++)
+            {
+                if (gen[i, j] == 2)
+                {
+                    //spr top
+                    int top = i + 1;
+                    while (top <= i + 2 && top < 5 && gen[top, j] != -1 && gen[top, j] != -2)
+                    {
+                        if (gen[top, j] == gen[i, j])
+                            wynik--;
+                        top++;
+                    }
+
+                    //spr bot
+                    int bot = i - 1;
+                    while (bot >= i - 2 && bot > -1 && gen[bot, j] != -1 && gen[bot, j] != -2)
+                    {
+                        if (gen[bot, j] == gen[i, j])
+                            wynik--;
+                        bot--;
+                    }
+
+                    //spr left
+                    int left = j - 1;
+                    while (left >= j - 2 && left > -1 && gen[i, left] != -1 && gen[i, left] != -2)
+                    {
+                        if (gen[i, left] == gen[i, j])
+                            wynik--;
+                        left--;
+                    }
+
+                    //spr right
+                    int right = j + 1;
+                    while (right <= j + 2 && right < 15 && gen[i, right] != -1 && gen[i, right] != -2)
+                    {
+                        if (gen[i, right] == gen[i, j])
+                            wynik--;
+                        right++;
+                    }
+
+                }
+            }
+
+        return wynik;
+    }
+
+    //Czy smietniki na aluminium nie sa obok siebie
+    int Filtr4(int[,] gen)
+    {
+        int wynik = 0;
+
+        for (int i = 0; i < 5; i++)
+            for (int j = 0; j < 15; j++)
+            {
+                if (gen[i, j] == 3)
+                {
+                    //spr top
+                    int top = i + 1;
+                    while (top <= i + 2 && top < 5 && gen[top, j] != -1 && gen[top, j] != -2)
+                    {
+                        if (gen[top, j] == gen[i, j])
+                            wynik=wynik-5;
+                        top++;
+                    }
+
+                    //spr bot
+                    int bot = i - 1;
+                    while (bot >= i - 2 && bot > -1 && gen[bot, j] != -1 && gen[bot, j] != -2)
+                    {
+                        if (gen[bot, j] == gen[i, j])
+                            wynik = wynik - 5;
+                        bot--;
+                    }
+
+                    //spr left
+                    int left = j - 1;
+                    while (left >= j - 2 && left > -1 && gen[i, left] != -1 && gen[i, left] != -2)
+                    {
+                        if (gen[i, left] == gen[i, j])
+                            wynik = wynik - 5;
+                        left--;
+                    }
+
+                    //spr right
+                    int right = j + 1;
+                    while (right <= j + 2 && right < 15 && gen[i, right] != -1 && gen[i, right] != -2)
+                    {
+                        if (gen[i, right] == gen[i, j])
+                            wynik = wynik - 5;
+                        right++;
+                    }
+
+                }
+            }
+
+        return wynik;
+    }
+    
+    //Czy smietniki rozne sa obok siebie
+    int Filtr5(int[,] gen)
+    {
+        int wynik = 0;
+
+        for (int i = 0; i < 5; i++)
+            for (int j = 0; j < 15; j++)
+            {
+                if (gen[i, j] == 1 || gen[i, j] == 2 || gen[i, j] == 3)
+                {
+                    //spr top
+                    int top = i + 1;
+                    if(top < 5)
+                        if (gen[top, j] != gen[i, j] && gen[top, j] != -1 && gen[top, j] != -2 && gen[top, j] != 0)
+                            wynik++;
+
+                    //spr bot
+                    int bot = i - 1;
+                    if (bot > -1)
+                        if (gen[bot, j] != gen[i, j] && gen[bot, j] != -1 && gen[bot, j] != -2 && gen[bot,j]!=0)
+                            wynik++;
+
+                    //spr left
+                    int left = j - 1;
+                    if(left > -1)
+                        if (gen[i, left] != gen[i, j]  && gen[i, left] != -1 && gen[i, left] != -2 && gen[i, left] != 0)
+                            wynik++;
+
+                    //spr right
+                    int right = j + 1;
+                    if(right < 15)
+                        if (gen[i, right] != gen[i, j] && gen[i, right] != -1 && gen[i, right] != -2 && gen[i, right] != 0)
+                            wynik++;
+
+                }
+            }
+
+        return wynik;
+    }
+
+    //liczba smietnikow i ich rodzajow
+    int Filtr6(int[,] gen)
+    {
+        int wynik = 0;
+        int liczba_plastik = 0;
+        int liczba_papier = 0;
+        int liczba_aluminium = 0;
+
+        for (int i = 0; i < 5; i++)
+            for (int j = 0; j < 15; j++)
+            {
+                if (gen[i, j] == 1)
+                    liczba_plastik++;
+                if (gen[i, j] == 1)
+                    liczba_papier++;
+                if (gen[i, j] == 1)
+                    liczba_aluminium++;
+            }
+
+        if (liczba_plastik < 4)
+            wynik = wynik + 4 - liczba_plastik;
+        else
+            wynik = wynik - 4 + liczba_plastik;
+
+        if (liczba_papier < 4)
+            wynik = wynik + 4 - liczba_papier;
+        else
+            wynik = wynik - 4 + liczba_papier;
+
+        if (liczba_aluminium < 4)
+            wynik = wynik + 4 - liczba_aluminium;
+        else
+            wynik = wynik - 4 + liczba_aluminium;
+
+        if (liczba_plastik + liczba_papier + liczba_aluminium < 12)
+            wynik = wynik + 12 - (liczba_plastik + liczba_papier + liczba_aluminium);
+        else
+            wynik = wynik - 12 + liczba_plastik + liczba_papier + liczba_aluminium;
+
+        return wynik;
+    }
+
+    //ocena 1/4 do poprawy ilosc w 2 cwirtach kolo 6
+    int Ocena(int[,] gen, int y, int x)
+    {
+        int liczba = 0;
+        //1 ćwiartka
+        if (y == 0 && x == 0)
+            for (int i = y; i < 2; i++)
+                for (int j = x; j < 8; j++)
+                    if (gen[i, j] == 1 || gen[i, j] == 2 || gen[i, j] == 3)
+                        liczba++;
+
+        //2 cwiartka
+        if (y == 0 && x == 8)
+            for (int i = y; i < 2; i++)
+                for (int j = x; j < 15; j++)
+                    if (gen[i, j] == 1 || gen[i, j] == 2 || gen[i, j] == 3)
+                        liczba++;
+
+        //3 cwiartka
+        if (y == 2 && x == 0)
+            for (int i = y; i < 5; i++)
+                for (int j = x; j < 8; j++)
+                    if (gen[i, j] == 1 || gen[i, j] == 2 || gen[i, j] == 3)
+                        liczba++;
+
+        //4 cwiartka
+        if (y == 2 && x == 8)
+            for (int i = y; i < 5; i++)
+                for (int j = x; j < 15; j++)
+                    if (gen[i, j] == 1 || gen[i, j] == 2 || gen[i, j] == 3)
+                        liczba++;
+
+        return liczba;
+    }
+
+    int[,] Skrzyzowanie(int[,]genX, int[,]genY)
+    {
+        int[,] plansza = new int[5, 15];
+        int ocena1 = Ocena(genX, 0, 0) + Ocena(genX, 2, 0) + Ocena(genY, 0, 8) + Ocena(genY, 2, 8);
+        int ocena2 = Ocena(genX, 0, 8) + Ocena(genX, 2, 8) + Ocena(genY, 0, 0) + Ocena(genY, 2, 0);
+        int ocena3 = Ocena(genX, 2, 0) + Ocena(genX, 2, 8) + Ocena(genY, 0, 0) + Ocena(genY, 0, 8);
+        int ocena4 = Ocena(genX, 0, 0) + Ocena(genX, 0, 8) + Ocena(genY, 2, 0) + Ocena(genY, 2, 8);
+        int ocena5 = Ocena(genX, 0, 8) + Ocena(genX, 2, 0) + Ocena(genY, 0, 0) + Ocena(genY, 2, 8);
+        int ocena6 = Ocena(genX, 0, 0) + Ocena(genX, 2, 8) + Ocena(genY, 0, 8) + Ocena(genY, 2, 0);
+
+        int ocena112 = 0;
+        int ocena212 = 0;
+        int ocena312 = 0;
+        int ocena412 = 0;
+        int ocena512 = 0;
+        int ocena612 = 0;
+
+        if (ocena1 > 12)
+            ocena112 = ocena1 - 12;
+        else
+            ocena112 = 12 - ocena1;
+
+        if (ocena2 > 12)
+            ocena212 = ocena2 - 12;
+        else
+            ocena212 = 12 - ocena2;
+
+        if (ocena3 > 12)
+            ocena312 = ocena3 - 12;
+        else
+            ocena312 = 12 - ocena3;
+
+        if (ocena4 > 12)
+            ocena412 = ocena4 - 12;
+        else
+            ocena412 = 12 - ocena4;
+
+        if (ocena5 > 12)
+            ocena512 = ocena5 - 12;
+        else
+            ocena512 = 12 - ocena5;
+
+        if (ocena6 > 12)
+            ocena612 = ocena6 - 12;
+        else
+            ocena612 = 12 - ocena6;
+
+        int[] tabela_ocen = { ocena112, ocena212, ocena312, ocena412, ocena512, ocena612 };
+        int min=ocena112;
+        int numer = 0;
+        for(int i=1; i<6; i++)
+        {
+            if(min>tabela_ocen[i])
+            {
+                min = tabela_ocen[i];
+                numer = i;
+            }
+        }
+
+        if(numer==0)
+        {
+            for (int i = 0; i < 5; i++)
+                for (int j = 0; j < 8; j++)
+                    plansza[i, j] = genX[i, j];
+            for (int i = 0; i < 5; i++)
+                for (int j = 8; j < 15; j++)
+                    plansza[i, j] = genY[i, j];
+        }
+
+        if (numer == 1)
+        {
+            for (int i = 0; i < 5; i++)
+                for (int j = 0; j < 8; j++)
+                    plansza[i, j] = genY[i, j];
+            for (int i = 0; i < 5; i++)
+                for (int j = 8; j < 15; j++)
+                    plansza[i, j] = genX[i, j];
+        }
+
+        if (numer == 2)
+        {
+            for (int i = 0; i < 2; i++)
+                for (int j = 0; j < 15; j++)
+                    plansza[i, j] = genY[i, j];
+            for (int i = 2; i < 5; i++)
+                for (int j = 0; j < 15; j++)
+                    plansza[i, j] = genX[i, j];
+        }
+
+        if (numer == 3)
+        {
+            for (int i = 0; i < 2; i++)
+                for (int j = 0; j < 15; j++)
+                    plansza[i, j] = genX[i, j];
+            for (int i = 2; i < 5; i++)
+                for (int j = 0; j < 15; j++)
+                    plansza[i, j] = genY[i, j];
+        }
+
+        if (numer == 4)
+        {
+            for (int i = 0; i < 2; i++)
+                for (int j = 0; j < 8; j++)
+                    plansza[i, j] = genX[i, j];
+            for (int i = 0; i < 2; i++)
+                for (int j = 8; j < 15; j++)
+                    plansza[i, j] = genY[i, j];
+            for (int i = 2; i < 5; i++)
+                for (int j = 0; j < 8; j++)
+                    plansza[i, j] = genY[i, j];
+            for (int i = 2; i < 5; i++)
+                for (int j = 8; j < 15; j++)
+                    plansza[i, j] = genX[i, j];
+        }
+
+        if (numer == 4)
+        {
+            for (int i = 0; i < 2; i++)
+                for (int j = 0; j < 8; j++)
+                    plansza[i, j] = genY[i, j];
+            for (int i = 0; i < 2; i++)
+                for (int j = 8; j < 15; j++)
+                    plansza[i, j] = genX[i, j];
+            for (int i = 2; i < 5; i++)
+                for (int j = 0; j < 8; j++)
+                    plansza[i, j] = genX[i, j];
+            for (int i = 2; i < 5; i++)
+                for (int j = 8; j < 15; j++)
+                    plansza[i, j] = genY[i, j];
+        }
+
+        return plansza;
+    }
+
+    int[,] Mutacja(int[,]gen)
+    {
+
+        int smietnik = (int)Random.Range(1,
+                                  4);
+        if(smietnik==1)
+        {
+            // x position between left & right border
+            int x1 = (int)Random.Range(0,
+                                      15);
+
+            // y position between top & bottom border
+            int y1 = (int)Random.Range(0,
+                                      5);
+
+            while (gen[y1, x1] != 0)
+            {
+                // x position between left & right border
+                x1 = (int)Random.Range(0,
+                                         15);
+
+                // y position between top & bottom border
+                y1 = (int)Random.Range(0,
+                                          5);
+            }
+
+            gen[y1, x1] = 1;
+        }
+
+        if (smietnik == 2)
+        {
+            // x position between left & right border
+            int x1 = (int)Random.Range(0,
+                                      15);
+
+            // y position between top & bottom border
+            int y1 = (int)Random.Range(0,
+                                      5);
+
+            while (gen[y1, x1] != 0)
+            {
+                // x position between left & right border
+                x1 = (int)Random.Range(0,
+                                         15);
+
+                // y position between top & bottom border
+                y1 = (int)Random.Range(0,
+                                          5);
+            }
+
+            gen[y1, x1] = 2;
+        }
+
+        if (smietnik == 3)
+        {
+            // x position between left & right border
+            int x1 = (int)Random.Range(0,
+                                      15);
+
+            // y position between top & bottom border
+            int y1 = (int)Random.Range(0,
+                                      5);
+
+            while (gen[y1, x1] != 0)
+            {
+                // x position between left & right border
+                x1 = (int)Random.Range(0,
+                                         15);
+
+                // y position between top & bottom border
+                y1 = (int)Random.Range(0,
+                                          5);
+            }
+
+            gen[y1, x1] = 3;
+        }
+
+        return Generuj(gen);
+    }
+
+    int[,] AlgorythmGenetic()
+    {
+        //generacja genów
+        int[,] gen1 = Generuj(plansza1);
+        int[,] gen2 = Generuj(plansza2);
+        int[,] gen3 = Generuj(plansza3);
+        int[,] gen4 = Generuj(plansza4);
+
+        int ocena1;
+        int ocena2;
+        int ocena3;
+        int ocena4;
+
+
+        for (int ilosc_skrzyzowan=0; ilosc_skrzyzowan<4; ilosc_skrzyzowan++)
+        {
+            //ocena genów
+            ocena1 = Filtr1(gen1) + Filtr2(gen1) + Filtr3(gen1) + Filtr4(gen1) + Filtr5(gen1) + Filtr6(gen1);
+            ocena2 = Filtr1(gen2) + Filtr2(gen2) + Filtr3(gen2) + Filtr4(gen2) + Filtr5(gen2) + Filtr6(gen2);
+            ocena3 = Filtr1(gen3) + Filtr2(gen3) + Filtr3(gen3) + Filtr4(gen3) + Filtr5(gen3) + Filtr6(gen3);
+            ocena4 = Filtr1(gen4) + Filtr2(gen4) + Filtr3(gen4) + Filtr4(gen4) + Filtr5(gen4) + Filtr6(gen4);
+
+            int[] tabela_ocen = { ocena1, ocena2, ocena3, ocena4 };
+            int max = ocena1;
+            int numer = 0;
+
+            for (int i = 1; i < 4; i++)
+                if (max < tabela_ocen[i])
+                {
+                    max = tabela_ocen[i];
+                    numer = i;
+                }
+            int max2;
+            int numer2;
+            if (numer == 0)
+            {
+                max2 = ocena2;
+                numer2 = 1;
+                for (int i = 2; i < 4; i++)
+                    if (max2 < tabela_ocen[i])
+                    {
+                        max2 = tabela_ocen[i];
+                        numer2 = i;
+                    }
+            }
+            else
+            {
+                max2 = ocena1;
+                numer2 = 0;
+                for (int i = 1; i < 4; i++)
+                    if (max2 < tabela_ocen[i] && numer != i)
+                    {
+                        max2 = tabela_ocen[i];
+                        numer2 = i;
+                    }
+            }
+
+            if ((numer == 0 && numer2 == 1) || (numer == 1 && numer2 == 0))
+            {
+                gen4 = Mutacja(gen1);
+                gen3 = Mutacja(gen2);
+                gen1 = Skrzyzowanie(gen1, gen2);
+                gen2 = Mutacja(gen1);
+
+            }
+
+            if ((numer == 0 && numer2 == 2) || (numer == 2 && numer2 == 0))
+            {
+                gen4 = Mutacja(gen1);
+                gen2 = Mutacja(gen3);
+                gen1 = Skrzyzowanie(gen1, gen3);
+                gen3 = Mutacja(gen1);
+
+            }
+
+            if ((numer == 0 && numer2 == 3) || (numer == 3 && numer2 == 0))
+            {
+                gen3 = Mutacja(gen1);
+                gen2 = Mutacja(gen4);
+                gen1 = Skrzyzowanie(gen1, gen4);
+                gen4 = Mutacja(gen1);
+            }
+
+            if ((numer == 1 && numer2 == 2) || (numer == 2 && numer2 == 1))
+            {
+                gen4 = Mutacja(gen2);
+                gen1 = Mutacja(gen3);
+                gen2 = Skrzyzowanie(gen2, gen3);
+                gen3 = Mutacja(gen2);
+            }
+
+            if ((numer == 1 && numer2 == 3) || (numer == 3 && numer2 == 1))
+            {
+                gen3 = Mutacja(gen2);
+                gen1 = Mutacja(gen4);
+                gen2 = Skrzyzowanie(gen2, gen4);
+                gen4 = Mutacja(gen2);
+            }
+
+            if ((numer == 2 && numer2 == 3) || (numer == 3 && numer2 == 2))
+            {
+                gen2 = Mutacja(gen3);
+                gen1 = Mutacja(gen4);
+                gen3 = Skrzyzowanie(gen3, gen4);
+                gen4 = Mutacja(gen3);
+            }
+        }
+
+        //ocena genów
+        ocena1 = Filtr1(gen1) + Filtr2(gen1) + Filtr3(gen1) + Filtr4(gen1) + Filtr5(gen1) + Filtr6(gen1);
+        ocena2 = Filtr1(gen2) + Filtr2(gen2) + Filtr3(gen2) + Filtr4(gen2) + Filtr5(gen2) + Filtr6(gen2);
+        ocena3 = Filtr1(gen3) + Filtr2(gen3) + Filtr3(gen3) + Filtr4(gen3) + Filtr5(gen3) + Filtr6(gen3);
+        ocena4 = Filtr1(gen4) + Filtr2(gen4) + Filtr3(gen4) + Filtr4(gen4) + Filtr5(gen4) + Filtr6(gen4);
+
+        int[] tabela_ocen_ost = { ocena1, ocena2, ocena3, ocena4 };
+        int max_ost = ocena1;
+        int numer_ost = 0;
+
+        for (int i = 1; i < 4; i++)
+            if (max_ost < tabela_ocen_ost[i])
+            {
+                max_ost = tabela_ocen_ost[i];
+                numer_ost = i;
+            }
+
+
+        if (numer_ost == 0)
+        {
+            return gen1;
+
+        }
+
+        if (numer_ost == 1)
+        {
+            return gen2;
+
+        }
+
+        if (numer_ost == 2)
+        {
+            return gen3;
+        }
+
+        
+
+       return gen4;
     }
 }
