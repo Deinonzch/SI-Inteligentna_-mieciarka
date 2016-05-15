@@ -11,25 +11,8 @@ public class SpawnSmietniki : MonoBehaviour {
                        { 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0 },
                        { 0, -1, 0, -2, -1, -1, -2, 0, -1, 0, -2, -1, -1, -2, 0 },
                        { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
-
-    int[,] plansza2 = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                       { 0, -1, 0, -2, -1, 0, -2, 0, -1, 0, -2, -1, -1, -2, 0 },
-                       { 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0 },
-                       { 0, -1, 0, -2, -1, -1, -2, 0, -1, 0, -2, -1, -1, -2, 0 },
-                       { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
-
-    int[,] plansza3 = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                       { 0, -1, 0, -2, -1, 0, -2, 0, -1, 0, -2, -1, -1, -2, 0 },
-                       { 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0 },
-                       { 0, -1, 0, -2, -1, -1, -2, 0, -1, 0, -2, -1, -1, -2, 0 },
-                       { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
-
-    int[,] plansza4 = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                       { 0, -1, 0, -2, -1, 0, -2, 0, -1, 0, -2, -1, -1, -2, 0 },
-                       { 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0 },
-                       { 0, -1, 0, -2, -1, -1, -2, 0, -1, 0, -2, -1, -1, -2, 0 },
-                       { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
-
+    int ilosc_smietnikow = 9;
+    int ilosc_rodzaju = 3;
     // Use this for initialization
     void Start () {
         // Spawn food every 4 seconds, starting in 3
@@ -139,6 +122,11 @@ public class SpawnSmietniki : MonoBehaviour {
         return plansza;
     }
     
+    int Kara(int wynik)
+    {
+        return wynik - 3;
+    }
+
     //Czy śmietnik jest przy parku
     int Filtr1(int[,] gen)
     {
@@ -222,8 +210,8 @@ public class SpawnSmietniki : MonoBehaviour {
                     int top = i + 1;
                     while (top <= i + 2 && top<5 && gen[top, j] != -1 && gen[top, j] != -2)
                     {
-                         if (gen[top, j] == gen[i, j])
-                            wynik--;
+                        if (gen[top, j] == gen[i, j])
+                            wynik = Kara(wynik);
                         top++;
                     }
 
@@ -232,7 +220,7 @@ public class SpawnSmietniki : MonoBehaviour {
                     while (bot >= i - 2 && bot > -1 && gen[bot,j]!=-1 && gen[bot, j] != -2)
                     {
                         if (gen[bot, j] == gen[i, j])
-                            wynik--;
+                            wynik = Kara(wynik);
                         bot--;
                     }
 
@@ -241,7 +229,7 @@ public class SpawnSmietniki : MonoBehaviour {
                     while (left >= j - 2 && left > -1 && gen[i, left] != -1 && gen[i, left] != -2)
                     {
                         if (gen[i, left] == gen[i, j])
-                            wynik--;
+                            wynik = Kara(wynik);
                         left--;
                     }
 
@@ -250,7 +238,7 @@ public class SpawnSmietniki : MonoBehaviour {
                     while (right <= j + 2 && right < 15 && gen[i, right] != -1 && gen[i, right] != -2)
                     {
                         if (gen[i, right] == gen[i, j])
-                            wynik--;
+                            wynik = Kara(wynik);
                         right++;
                     }
 
@@ -275,7 +263,7 @@ public class SpawnSmietniki : MonoBehaviour {
                     while (top <= i + 2 && top < 5 && gen[top, j] != -1 && gen[top, j] != -2)
                     {
                         if (gen[top, j] == gen[i, j])
-                            wynik--;
+                            wynik = Kara(wynik);
                         top++;
                     }
 
@@ -284,7 +272,7 @@ public class SpawnSmietniki : MonoBehaviour {
                     while (bot >= i - 2 && bot > -1 && gen[bot, j] != -1 && gen[bot, j] != -2)
                     {
                         if (gen[bot, j] == gen[i, j])
-                            wynik--;
+                            wynik = Kara(wynik);
                         bot--;
                     }
 
@@ -293,7 +281,7 @@ public class SpawnSmietniki : MonoBehaviour {
                     while (left >= j - 2 && left > -1 && gen[i, left] != -1 && gen[i, left] != -2)
                     {
                         if (gen[i, left] == gen[i, j])
-                            wynik--;
+                            wynik = Kara(wynik);
                         left--;
                     }
 
@@ -302,7 +290,7 @@ public class SpawnSmietniki : MonoBehaviour {
                     while (right <= j + 2 && right < 15 && gen[i, right] != -1 && gen[i, right] != -2)
                     {
                         if (gen[i, right] == gen[i, j])
-                            wynik--;
+                            wynik = Kara(wynik);
                         right++;
                     }
 
@@ -327,7 +315,7 @@ public class SpawnSmietniki : MonoBehaviour {
                     while (top <= i + 2 && top < 5 && gen[top, j] != -1 && gen[top, j] != -2)
                     {
                         if (gen[top, j] == gen[i, j])
-                            wynik=wynik-5;
+                            wynik = Kara(wynik);
                         top++;
                     }
 
@@ -336,7 +324,7 @@ public class SpawnSmietniki : MonoBehaviour {
                     while (bot >= i - 2 && bot > -1 && gen[bot, j] != -1 && gen[bot, j] != -2)
                     {
                         if (gen[bot, j] == gen[i, j])
-                            wynik = wynik - 5;
+                            wynik = Kara(wynik);
                         bot--;
                     }
 
@@ -345,7 +333,7 @@ public class SpawnSmietniki : MonoBehaviour {
                     while (left >= j - 2 && left > -1 && gen[i, left] != -1 && gen[i, left] != -2)
                     {
                         if (gen[i, left] == gen[i, j])
-                            wynik = wynik - 5;
+                            wynik = Kara(wynik);
                         left--;
                     }
 
@@ -354,7 +342,7 @@ public class SpawnSmietniki : MonoBehaviour {
                     while (right <= j + 2 && right < 15 && gen[i, right] != -1 && gen[i, right] != -2)
                     {
                         if (gen[i, right] == gen[i, j])
-                            wynik = wynik - 5;
+                            wynik = Kara(wynik);
                         right++;
                     }
 
@@ -423,25 +411,25 @@ public class SpawnSmietniki : MonoBehaviour {
                     liczba_aluminium++;
             }
 
-        if (liczba_plastik < 4)
-            wynik = wynik + 4 - liczba_plastik;
+        if (liczba_plastik < ilosc_rodzaju)
+            wynik = wynik + ilosc_rodzaju - liczba_plastik;
         else
-            wynik = wynik - 4 + liczba_plastik;
+            wynik = wynik - ilosc_rodzaju + liczba_plastik;
 
-        if (liczba_papier < 4)
-            wynik = wynik + 4 - liczba_papier;
+        if (liczba_papier < ilosc_rodzaju)
+            wynik = wynik + ilosc_rodzaju - liczba_papier;
         else
-            wynik = wynik - 4 + liczba_papier;
+            wynik = wynik - ilosc_rodzaju + liczba_papier;
 
-        if (liczba_aluminium < 4)
-            wynik = wynik + 4 - liczba_aluminium;
+        if (liczba_aluminium < ilosc_rodzaju)
+            wynik = wynik + ilosc_rodzaju - liczba_aluminium;
         else
-            wynik = wynik - 4 + liczba_aluminium;
+            wynik = wynik - ilosc_rodzaju + liczba_aluminium;
 
-        if (liczba_plastik + liczba_papier + liczba_aluminium < 12)
-            wynik = wynik + 12 - (liczba_plastik + liczba_papier + liczba_aluminium);
+        if (liczba_plastik + liczba_papier + liczba_aluminium < ilosc_smietnikow)
+            wynik = wynik + ilosc_smietnikow - (liczba_plastik + liczba_papier + liczba_aluminium);
         else
-            wynik = wynik - 12 + liczba_plastik + liczba_papier + liczba_aluminium;
+            wynik = wynik - ilosc_smietnikow + liczba_plastik + liczba_papier + liczba_aluminium;
 
         return wynik;
     }
@@ -480,6 +468,18 @@ public class SpawnSmietniki : MonoBehaviour {
 
         return liczba;
     }
+    
+    //ile smietnikow na planszy
+    int Liczebnosc(int[,] gen)
+    {
+        int liczebnosc = 0;
+        for (int i = 0; i < 5; i++)
+            for (int j = 0; j < 15; j++)
+                if (gen[i, j] == 1 || gen[i, j] == 2 || gen[i, j] == 3)
+                    liczebnosc++;
+
+        return liczebnosc;
+    }
 
     int[,] Skrzyzowanie(int[,]genX, int[,]genY)
     {
@@ -498,35 +498,35 @@ public class SpawnSmietniki : MonoBehaviour {
         int ocena512 = 0;
         int ocena612 = 0;
 
-        if (ocena1 > 12)
-            ocena112 = ocena1 - 12;
+        if (ocena1 > ilosc_smietnikow)
+            ocena112 = ocena1 - ilosc_smietnikow;
         else
-            ocena112 = 12 - ocena1;
+            ocena112 = ilosc_smietnikow - ocena1;
 
-        if (ocena2 > 12)
-            ocena212 = ocena2 - 12;
+        if (ocena2 > ilosc_smietnikow)
+            ocena212 = ocena2 - ilosc_smietnikow;
         else
-            ocena212 = 12 - ocena2;
+            ocena212 = ilosc_smietnikow - ocena2;
 
-        if (ocena3 > 12)
-            ocena312 = ocena3 - 12;
+        if (ocena3 > ilosc_smietnikow)
+            ocena312 = ocena3 - ilosc_smietnikow;
         else
-            ocena312 = 12 - ocena3;
+            ocena312 = ilosc_smietnikow - ocena3;
 
-        if (ocena4 > 12)
-            ocena412 = ocena4 - 12;
+        if (ocena4 > ilosc_smietnikow)
+            ocena412 = ocena4 - ilosc_smietnikow;
         else
-            ocena412 = 12 - ocena4;
+            ocena412 = ilosc_smietnikow - ocena4;
 
-        if (ocena5 > 12)
-            ocena512 = ocena5 - 12;
+        if (ocena5 > ilosc_smietnikow)
+            ocena512 = ocena5 - ilosc_smietnikow;
         else
-            ocena512 = 12 - ocena5;
+            ocena512 = ilosc_smietnikow - ocena5;
 
-        if (ocena6 > 12)
-            ocena612 = ocena6 - 12;
+        if (ocena6 > ilosc_smietnikow)
+            ocena612 = ocena6 - ilosc_smietnikow;
         else
-            ocena612 = 12 - ocena6;
+            ocena612 = ilosc_smietnikow - ocena6;
 
         int[] tabela_ocen = { ocena112, ocena212, ocena312, ocena412, ocena512, ocena612 };
         int min=ocena112;
@@ -619,7 +619,7 @@ public class SpawnSmietniki : MonoBehaviour {
     {
 
         int smietnik = (int)Random.Range(1,
-                                  4);
+                                  7);
         if(smietnik==1)
         {
             // x position between left & right border
@@ -691,37 +691,109 @@ public class SpawnSmietniki : MonoBehaviour {
 
             gen[y1, x1] = 3;
         }
+        //degradacja
+        if (smietnik == 4)
+        {
+            // x position between left & right border
+            int x1 = (int)Random.Range(0,
+                                      15);
+
+            // y position between top & bottom border
+            int y1 = (int)Random.Range(0,
+                                      5);
+
+            while (gen[y1, x1] != 1)
+            {
+                // x position between left & right border
+                x1 = (int)Random.Range(0,
+                                         15);
+
+                // y position between top & bottom border
+                y1 = (int)Random.Range(0,
+                                          5);
+            }
+
+            gen[y1, x1] = 0;
+        }
+
+        if (smietnik == 5)
+        {
+            // x position between left & right border
+            int x1 = (int)Random.Range(0,
+                                      15);
+
+            // y position between top & bottom border
+            int y1 = (int)Random.Range(0,
+                                      5);
+
+            while (gen[y1, x1] != 2)
+            {
+                // x position between left & right border
+                x1 = (int)Random.Range(0,
+                                         15);
+
+                // y position between top & bottom border
+                y1 = (int)Random.Range(0,
+                                          5);
+            }
+
+            gen[y1, x1] = 0;
+        }
+
+        if (smietnik == 6)
+        {
+            // x position between left & right border
+            int x1 = (int)Random.Range(0,
+                                      15);
+
+            // y position between top & bottom border
+            int y1 = (int)Random.Range(0,
+                                      5);
+
+            while (gen[y1, x1] != 3)
+            {
+                // x position between left & right border
+                x1 = (int)Random.Range(0,
+                                         15);
+
+                // y position between top & bottom border
+                y1 = (int)Random.Range(0,
+                                          5);
+            }
+
+            gen[y1, x1] = 0;
+        }
 
         return Generuj(gen);
     }
 
     int[,] AlgorythmGenetic()
     {
+        int[,] osobnik = plansza1;
+        int ocena=8;
         //generacja genów
         int[,] gen1 = Generuj(plansza1);
-        int[,] gen2 = Generuj(plansza2);
-        int[,] gen3 = Generuj(plansza3);
-        int[,] gen4 = Generuj(plansza4);
+        int[,] gen2 = Generuj(plansza1);
+        int[,] gen3 = Generuj(plansza1);
+        int[,] gen4 = Generuj(plansza1);
+        int[,] gen5 = Generuj(plansza1);
 
-        int ocena1;
-        int ocena2;
-        int ocena3;
-        int ocena4;
+        //ocena genów
+        int ocena1 = Filtr1(gen1) + Filtr2(gen1) + Filtr3(gen1) + Filtr4(gen1) + Filtr5(gen1) + Filtr6(gen1);
+        int ocena2 = Filtr1(gen2) + Filtr2(gen2) + Filtr3(gen2) + Filtr4(gen2) + Filtr5(gen2) + Filtr6(gen2);
+        int ocena3 = Filtr1(gen3) + Filtr2(gen3) + Filtr3(gen3) + Filtr4(gen3) + Filtr5(gen3) + Filtr6(gen3);
+        int ocena4 = Filtr1(gen4) + Filtr2(gen4) + Filtr3(gen4) + Filtr4(gen4) + Filtr5(gen4) + Filtr6(gen4);
+        int ocena5 = Filtr1(gen5) + Filtr2(gen5) + Filtr3(gen5) + Filtr4(gen5) + Filtr5(gen5) + Filtr6(gen5);
 
-
-        for (int ilosc_skrzyzowan=0; ilosc_skrzyzowan<4; ilosc_skrzyzowan++)
+        int[] tabela_ocen = { ocena1, ocena2, ocena3, ocena4, ocena5 };
+        int ilosc_skrzyzowan = 0;
+        while (ilosc_skrzyzowan<10 && ocena1< ocena && ocena2 < ocena && ocena3 < ocena && ocena4 < ocena && ocena5 < ocena)
         {
-            //ocena genów
-            ocena1 = Filtr1(gen1) + Filtr2(gen1) + Filtr3(gen1) + Filtr4(gen1) + Filtr5(gen1) + Filtr6(gen1);
-            ocena2 = Filtr1(gen2) + Filtr2(gen2) + Filtr3(gen2) + Filtr4(gen2) + Filtr5(gen2) + Filtr6(gen2);
-            ocena3 = Filtr1(gen3) + Filtr2(gen3) + Filtr3(gen3) + Filtr4(gen3) + Filtr5(gen3) + Filtr6(gen3);
-            ocena4 = Filtr1(gen4) + Filtr2(gen4) + Filtr3(gen4) + Filtr4(gen4) + Filtr5(gen4) + Filtr6(gen4);
-
-            int[] tabela_ocen = { ocena1, ocena2, ocena3, ocena4 };
+            
             int max = ocena1;
             int numer = 0;
 
-            for (int i = 1; i < 4; i++)
+            for (int i = 1; i < 5; i++)
                 if (max < tabela_ocen[i])
                 {
                     max = tabela_ocen[i];
@@ -733,7 +805,7 @@ public class SpawnSmietniki : MonoBehaviour {
             {
                 max2 = ocena2;
                 numer2 = 1;
-                for (int i = 2; i < 4; i++)
+                for (int i = 2; i < 5; i++)
                     if (max2 < tabela_ocen[i])
                     {
                         max2 = tabela_ocen[i];
@@ -744,7 +816,7 @@ public class SpawnSmietniki : MonoBehaviour {
             {
                 max2 = ocena1;
                 numer2 = 0;
-                for (int i = 1; i < 4; i++)
+                for (int i = 1; i < 5; i++)
                     if (max2 < tabela_ocen[i] && numer != i)
                     {
                         max2 = tabela_ocen[i];
@@ -752,62 +824,182 @@ public class SpawnSmietniki : MonoBehaviour {
                     }
             }
 
-            if ((numer == 0 && numer2 == 1) || (numer == 1 && numer2 == 0))
+            if (numer == 0 && numer2 == 1)
             {
                 gen4 = Mutacja(gen1);
                 gen3 = Mutacja(gen2);
-                gen1 = Skrzyzowanie(gen1, gen2);
-                gen2 = Mutacja(gen1);
+                gen5 = Skrzyzowanie(gen1, gen2);
+                gen2 = Mutacja(gen5);
 
             }
 
-            if ((numer == 0 && numer2 == 2) || (numer == 2 && numer2 == 0))
+            if (numer == 1 && numer2 == 0)
+            {
+                gen4 = Mutacja(gen1);
+                gen3 = Mutacja(gen2);
+                gen5 = Skrzyzowanie(gen1, gen2);
+                gen1 = Mutacja(gen5);
+
+            }
+
+            if (numer == 0 && numer2 == 2)
             {
                 gen4 = Mutacja(gen1);
                 gen2 = Mutacja(gen3);
-                gen1 = Skrzyzowanie(gen1, gen3);
-                gen3 = Mutacja(gen1);
+                gen5 = Skrzyzowanie(gen1, gen3);
+                gen3 = Mutacja(gen5);
 
             }
 
-            if ((numer == 0 && numer2 == 3) || (numer == 3 && numer2 == 0))
+            if (numer == 2 && numer2 == 0)
+            {
+                gen4 = Mutacja(gen1);
+                gen2 = Mutacja(gen3);
+                gen5 = Skrzyzowanie(gen1, gen3);
+                gen1 = Mutacja(gen5);
+
+            }
+
+            if (numer == 0 && numer2 == 3)
             {
                 gen3 = Mutacja(gen1);
                 gen2 = Mutacja(gen4);
-                gen1 = Skrzyzowanie(gen1, gen4);
-                gen4 = Mutacja(gen1);
+                gen5 = Skrzyzowanie(gen1, gen4);
+                gen4 = Mutacja(gen5);
             }
 
-            if ((numer == 1 && numer2 == 2) || (numer == 2 && numer2 == 1))
+            if (numer == 3 && numer2 == 0)
+            {
+                gen3 = Mutacja(gen1);
+                gen2 = Mutacja(gen4);
+                gen5 = Skrzyzowanie(gen1, gen4);
+                gen1 = Mutacja(gen5);
+            }
+
+            if (numer == 0 && numer2 == 4)
+            {
+                gen3 = Mutacja(gen1);
+                gen2 = Mutacja(gen5);
+                gen4 = Skrzyzowanie(gen1, gen5);
+                gen5 = Mutacja(gen4);
+            }
+
+            if (numer == 4 && numer2 == 0)
+            {
+                gen3 = Mutacja(gen1);
+                gen2 = Mutacja(gen5);
+                gen4 = Skrzyzowanie(gen1, gen5);
+                gen1 = Mutacja(gen4);
+            }
+
+            if (numer == 1 && numer2 == 2)
             {
                 gen4 = Mutacja(gen2);
                 gen1 = Mutacja(gen3);
-                gen2 = Skrzyzowanie(gen2, gen3);
-                gen3 = Mutacja(gen2);
+                gen5 = Skrzyzowanie(gen2, gen3);
+                gen3 = Mutacja(gen5);
             }
 
-            if ((numer == 1 && numer2 == 3) || (numer == 3 && numer2 == 1))
+            if (numer == 2 && numer2 == 1)
+            {
+                gen4 = Mutacja(gen2);
+                gen1 = Mutacja(gen3);
+                gen5 = Skrzyzowanie(gen2, gen3);
+                gen2 = Mutacja(gen5);
+            }
+
+            if (numer == 1 && numer2 == 3)
             {
                 gen3 = Mutacja(gen2);
                 gen1 = Mutacja(gen4);
-                gen2 = Skrzyzowanie(gen2, gen4);
-                gen4 = Mutacja(gen2);
+                gen5 = Skrzyzowanie(gen2, gen4);
+                gen4 = Mutacja(gen5);
             }
 
-            if ((numer == 2 && numer2 == 3) || (numer == 3 && numer2 == 2))
+            if (numer == 3 && numer2 == 1)
+            {
+                gen3 = Mutacja(gen2);
+                gen1 = Mutacja(gen4);
+                gen5 = Skrzyzowanie(gen2, gen4);
+                gen2 = Mutacja(gen5);
+            }
+
+            if (numer == 1 && numer2 == 4)
+            {
+                gen3 = Mutacja(gen2);
+                gen1 = Mutacja(gen5);
+                gen4 = Skrzyzowanie(gen2, gen5);
+                gen5 = Mutacja(gen4);
+            }
+
+            if (numer == 4 && numer2 == 1)
+            {
+                gen3 = Mutacja(gen2);
+                gen1 = Mutacja(gen5);
+                gen4 = Skrzyzowanie(gen2, gen5);
+                gen2 = Mutacja(gen4);
+            }
+
+            if (numer == 2 && numer2 == 3)
             {
                 gen2 = Mutacja(gen3);
                 gen1 = Mutacja(gen4);
-                gen3 = Skrzyzowanie(gen3, gen4);
+                gen5 = Skrzyzowanie(gen3, gen4);
+                gen4 = Mutacja(gen5);
+            }
+
+            if (numer == 3 && numer2 == 2)
+            {
+                gen2 = Mutacja(gen3);
+                gen1 = Mutacja(gen4);
+                gen5 = Skrzyzowanie(gen3, gen4);
+                gen3 = Mutacja(gen5);
+            }
+
+            if (numer == 2 && numer2 == 4)
+            {
+                gen2 = Mutacja(gen3);
+                gen1 = Mutacja(gen5);
+                gen4 = Skrzyzowanie(gen3, gen5);
+                gen5 = Mutacja(gen4);
+            }
+
+            if (numer == 4 && numer2 == 2)
+            {
+                gen2 = Mutacja(gen3);
+                gen1 = Mutacja(gen5);
+                gen4 = Skrzyzowanie(gen3, gen5);
+                gen3 = Mutacja(gen4);
+            }
+
+            if (numer == 3 && numer2 == 4)
+            {
+                gen2 = Mutacja(gen4);
+                gen1 = Mutacja(gen5);
+                gen3 = Skrzyzowanie(gen4, gen5);
+                gen5 = Mutacja(gen3);
+            }
+
+            if (numer == 4 && numer2 == 3)
+            {
+                gen2 = Mutacja(gen4);
+                gen1 = Mutacja(gen5);
+                gen3 = Skrzyzowanie(gen4, gen5);
                 gen4 = Mutacja(gen3);
             }
-        }
 
-        //ocena genów
-        ocena1 = Filtr1(gen1) + Filtr2(gen1) + Filtr3(gen1) + Filtr4(gen1) + Filtr5(gen1) + Filtr6(gen1);
-        ocena2 = Filtr1(gen2) + Filtr2(gen2) + Filtr3(gen2) + Filtr4(gen2) + Filtr5(gen2) + Filtr6(gen2);
-        ocena3 = Filtr1(gen3) + Filtr2(gen3) + Filtr3(gen3) + Filtr4(gen3) + Filtr5(gen3) + Filtr6(gen3);
-        ocena4 = Filtr1(gen4) + Filtr2(gen4) + Filtr3(gen4) + Filtr4(gen4) + Filtr5(gen4) + Filtr6(gen4);
+            ocena1 = Filtr1(gen1) + Filtr2(gen1) + Filtr3(gen1) + Filtr4(gen1) + Filtr5(gen1) + Filtr6(gen1);
+            ocena2 = Filtr1(gen2) + Filtr2(gen2) + Filtr3(gen2) + Filtr4(gen2) + Filtr5(gen2) + Filtr6(gen2);
+            ocena3 = Filtr1(gen3) + Filtr2(gen3) + Filtr3(gen3) + Filtr4(gen3) + Filtr5(gen3) + Filtr6(gen3);
+            ocena4 = Filtr1(gen4) + Filtr2(gen4) + Filtr3(gen4) + Filtr4(gen4) + Filtr5(gen4) + Filtr6(gen4);
+
+            tabela_ocen[0] = ocena1;
+            tabela_ocen[1] = ocena2;
+            tabela_ocen[2] = ocena3;
+            tabela_ocen[3] = ocena4;
+
+            ilosc_skrzyzowan++;
+        }
 
         int[] tabela_ocen_ost = { ocena1, ocena2, ocena3, ocena4 };
         int max_ost = ocena1;
@@ -823,23 +1015,26 @@ public class SpawnSmietniki : MonoBehaviour {
 
         if (numer_ost == 0)
         {
-            return gen1;
+            osobnik = gen1;
 
         }
 
         if (numer_ost == 1)
         {
-            return gen2;
+            osobnik = gen2;
 
         }
 
         if (numer_ost == 2)
         {
-            return gen3;
+            osobnik = gen3;
         }
 
-        
+        if (numer_ost == 3)
+        {
+            osobnik = gen4;
+        }
 
-       return gen4;
+        return osobnik;
     }
 }
