@@ -196,119 +196,15 @@ public class SpawnSmietniki : MonoBehaviour {
         return wynik;
     }
 
-    //Czy smietniki na plastik nie sa obok siebie
-    int Filtr2(int[,] gen)
-    {
-        int wynik = 0;
-
-        for(int i=0; i<5; i++)
-            for(int j=0; j<15; j++)
-            {
-                if(gen[i,j]==1)
-                {
-                    //spr top
-                    int top = i + 1;
-                    while (top <= i + 2 && top<5 && gen[top, j] != -1 && gen[top, j] != -2)
-                    {
-                        if (gen[top, j] == gen[i, j])
-                            wynik = Kara(wynik);
-                        top++;
-                    }
-
-                    //spr bot
-                    int bot = i - 1;
-                    while (bot >= i - 2 && bot > -1 && gen[bot,j]!=-1 && gen[bot, j] != -2)
-                    {
-                        if (gen[bot, j] == gen[i, j])
-                            wynik = Kara(wynik);
-                        bot--;
-                    }
-
-                    //spr left
-                    int left = j - 1;
-                    while (left >= j - 2 && left > -1 && gen[i, left] != -1 && gen[i, left] != -2)
-                    {
-                        if (gen[i, left] == gen[i, j])
-                            wynik = Kara(wynik);
-                        left--;
-                    }
-
-                    //spr right
-                    int right = j + 1;
-                    while (right <= j + 2 && right < 15 && gen[i, right] != -1 && gen[i, right] != -2)
-                    {
-                        if (gen[i, right] == gen[i, j])
-                            wynik = Kara(wynik);
-                        right++;
-                    }
-
-                }
-            }
-
-        return wynik;
-    }
-
-    //Czy smietniki na papier nie sa obok siebie
-    int Filtr3(int[,] gen)
+    //Czy smietniki tego samego rodzaju nie są obok siebie
+    int Filtr2(int[,] gen, int smietnik )
     {
         int wynik = 0;
 
         for (int i = 0; i < 5; i++)
             for (int j = 0; j < 15; j++)
             {
-                if (gen[i, j] == 2)
-                {
-                    //spr top
-                    int top = i + 1;
-                    while (top <= i + 2 && top < 5 && gen[top, j] != -1 && gen[top, j] != -2)
-                    {
-                        if (gen[top, j] == gen[i, j])
-                            wynik = Kara(wynik);
-                        top++;
-                    }
-
-                    //spr bot
-                    int bot = i - 1;
-                    while (bot >= i - 2 && bot > -1 && gen[bot, j] != -1 && gen[bot, j] != -2)
-                    {
-                        if (gen[bot, j] == gen[i, j])
-                            wynik = Kara(wynik);
-                        bot--;
-                    }
-
-                    //spr left
-                    int left = j - 1;
-                    while (left >= j - 2 && left > -1 && gen[i, left] != -1 && gen[i, left] != -2)
-                    {
-                        if (gen[i, left] == gen[i, j])
-                            wynik = Kara(wynik);
-                        left--;
-                    }
-
-                    //spr right
-                    int right = j + 1;
-                    while (right <= j + 2 && right < 15 && gen[i, right] != -1 && gen[i, right] != -2)
-                    {
-                        if (gen[i, right] == gen[i, j])
-                            wynik = Kara(wynik);
-                        right++;
-                    }
-
-                }
-            }
-
-        return wynik;
-    }
-
-    //Czy smietniki na aluminium nie sa obok siebie
-    int Filtr4(int[,] gen)
-    {
-        int wynik = 0;
-
-        for (int i = 0; i < 5; i++)
-            for (int j = 0; j < 15; j++)
-            {
-                if (gen[i, j] == 3)
+                if (gen[i, j] == smietnik)
                 {
                     //spr top
                     int top = i + 1;
@@ -353,7 +249,7 @@ public class SpawnSmietniki : MonoBehaviour {
     }
     
     //Czy smietniki rozne sa obok siebie
-    int Filtr5(int[,] gen)
+    int Filtr3(int[,] gen)
     {
         int wynik = 0;
 
@@ -393,7 +289,7 @@ public class SpawnSmietniki : MonoBehaviour {
     }
 
     //liczba smietnikow i ich rodzajow
-    int Filtr6(int[,] gen)
+    int Filtr4(int[,] gen)
     {
         int wynik = 0;
         int liczba_plastik = 0;
@@ -430,6 +326,75 @@ public class SpawnSmietniki : MonoBehaviour {
             wynik = wynik + ilosc_smietnikow - (liczba_plastik + liczba_papier + liczba_aluminium);
         else
             wynik = wynik - ilosc_smietnikow + liczba_plastik + liczba_papier + liczba_aluminium;
+
+        return wynik;
+    }
+    
+    //Czy są ustawione x śmietników obok siebie;
+    int Filtr5(int[,] gen)
+    {
+        int wynik = 0;
+        int wynikZnalezionegoRzedu = 0;
+        int licznik = 0;
+        for(int i = 0; i<5; i++)
+            for(int j = 0; j<15; j++)
+            {
+                if ((gen[i, j] == 1 || gen[i, j] == 2 || gen[i,j]==3) && licznik <4)
+                    {
+                            wynikZnalezionegoRzedu++;
+                            licznik++;
+                     }
+
+                if ((gen[i, j] == 1 || gen[i, j] == 2 || gen[i, j] == 3) && licznik == 4)
+                {
+                    wynikZnalezionegoRzedu = -1;
+                    licznik++;
+                }
+
+                if ((gen[i, j] == 1 || gen[i, j] == 2 || gen[i, j] == 3) && licznik > 4)
+                {
+                    wynikZnalezionegoRzedu--;
+                    licznik++;
+                }
+                if ((gen[i, j] == -1 || gen[i,j]==-2 || gen[i,j]==0))
+                {
+                    licznik = 0;
+                    wynik = wynik + wynikZnalezionegoRzedu;
+                    wynikZnalezionegoRzedu = 0;
+                }                        
+            }
+        licznik = 0;
+        wynik = wynik + wynikZnalezionegoRzedu;
+        wynikZnalezionegoRzedu = 0;
+        for (int j = 0; j < 15; j++)
+            for (int i = 0; i < 5; i++)
+            {
+                if ((gen[i, j] == 1 || gen[i, j] == 2 || gen[i, j] == 3) && licznik < 4)
+                {
+                    wynikZnalezionegoRzedu++;
+                    licznik++;
+                }
+
+                if ((gen[i, j] == 1 || gen[i, j] == 2 || gen[i, j] == 3) && licznik == 4)
+                {
+                    wynikZnalezionegoRzedu = -1;
+                    licznik++;
+                }
+
+                if ((gen[i, j] == 1 || gen[i, j] == 2 || gen[i, j] == 3) && licznik > 4)
+                {
+                    wynikZnalezionegoRzedu--;
+                    licznik++;
+                }
+                if ((gen[i, j] == -1 || gen[i, j] == -2 || gen[i, j] == 0))
+                {
+                    licznik = 0;
+                    wynik = wynik + wynikZnalezionegoRzedu;
+                    wynikZnalezionegoRzedu = 0;
+                }
+            }
+
+        wynik = wynik + wynikZnalezionegoRzedu;
 
         return wynik;
     }
@@ -481,138 +446,42 @@ public class SpawnSmietniki : MonoBehaviour {
         return liczebnosc;
     }
 
-    int[,] Skrzyzowanie(int[,]genX, int[,]genY)
+    void Skrzyzowanie(int[,]genX, int[,]genY)
     {
-        int[,] plansza = new int[5, 15];
-        int ocena1 = Ocena(genX, 0, 0) + Ocena(genX, 2, 0) + Ocena(genY, 0, 8) + Ocena(genY, 2, 8);
-        int ocena2 = Ocena(genX, 0, 8) + Ocena(genX, 2, 8) + Ocena(genY, 0, 0) + Ocena(genY, 2, 0);
-        int ocena3 = Ocena(genX, 2, 0) + Ocena(genX, 2, 8) + Ocena(genY, 0, 0) + Ocena(genY, 0, 8);
-        int ocena4 = Ocena(genX, 0, 0) + Ocena(genX, 0, 8) + Ocena(genY, 2, 0) + Ocena(genY, 2, 8);
-        int ocena5 = Ocena(genX, 0, 8) + Ocena(genX, 2, 0) + Ocena(genY, 0, 0) + Ocena(genY, 2, 8);
-        int ocena6 = Ocena(genX, 0, 0) + Ocena(genX, 2, 8) + Ocena(genY, 0, 8) + Ocena(genY, 2, 0);
+        int x = (int)Random.Range(0,15);
+        int y = (int)Random.Range(0, 5);
+        int szansa_mutacji = (int)Random.Range(1, 21);
+        int[,] plansza = genX;
+        int[,] plansza2 = genY;
 
-        int ocena112 = 0;
-        int ocena212 = 0;
-        int ocena312 = 0;
-        int ocena412 = 0;
-        int ocena512 = 0;
-        int ocena612 = 0;
-
-        if (ocena1 > ilosc_smietnikow)
-            ocena112 = ocena1 - ilosc_smietnikow;
-        else
-            ocena112 = ilosc_smietnikow - ocena1;
-
-        if (ocena2 > ilosc_smietnikow)
-            ocena212 = ocena2 - ilosc_smietnikow;
-        else
-            ocena212 = ilosc_smietnikow - ocena2;
-
-        if (ocena3 > ilosc_smietnikow)
-            ocena312 = ocena3 - ilosc_smietnikow;
-        else
-            ocena312 = ilosc_smietnikow - ocena3;
-
-        if (ocena4 > ilosc_smietnikow)
-            ocena412 = ocena4 - ilosc_smietnikow;
-        else
-            ocena412 = ilosc_smietnikow - ocena4;
-
-        if (ocena5 > ilosc_smietnikow)
-            ocena512 = ocena5 - ilosc_smietnikow;
-        else
-            ocena512 = ilosc_smietnikow - ocena5;
-
-        if (ocena6 > ilosc_smietnikow)
-            ocena612 = ocena6 - ilosc_smietnikow;
-        else
-            ocena612 = ilosc_smietnikow - ocena6;
-
-        int[] tabela_ocen = { ocena112, ocena212, ocena312, ocena412, ocena512, ocena612 };
-        int min=ocena112;
-        int numer = 0;
-        for(int i=1; i<6; i++)
-        {
-            if(min>tabela_ocen[i])
+        for(int i=0; i<x; i++)
+            for(int j=0; j<y; j++)
             {
-                min = tabela_ocen[i];
-                numer = i;
+                genX[i, j] = plansza[i, j];
+                genY[i, j] = plansza2[i, j];
+            }
+
+        for (int i = x; i < 5; i++)
+            for (int j = y; j < 15; j++)
+            {
+                genX[i, j] = plansza2[i, j];
+                genY[i, j] = plansza[i, j];
+            }
+        
+        if(szansa_mutacji==20)
+        {
+            int pierwszyLubDrugi = (int)Random.Range(1, 4);
+            if (pierwszyLubDrugi == 1)
+                Mutacja(genX);
+            if (pierwszyLubDrugi == 2)
+                Mutacja(genX);
+            if (pierwszyLubDrugi == 3)
+            {
+                Mutacja(genX);
+                Mutacja(genY);
             }
         }
 
-        if(numer==0)
-        {
-            for (int i = 0; i < 5; i++)
-                for (int j = 0; j < 8; j++)
-                    plansza[i, j] = genX[i, j];
-            for (int i = 0; i < 5; i++)
-                for (int j = 8; j < 15; j++)
-                    plansza[i, j] = genY[i, j];
-        }
-
-        if (numer == 1)
-        {
-            for (int i = 0; i < 5; i++)
-                for (int j = 0; j < 8; j++)
-                    plansza[i, j] = genY[i, j];
-            for (int i = 0; i < 5; i++)
-                for (int j = 8; j < 15; j++)
-                    plansza[i, j] = genX[i, j];
-        }
-
-        if (numer == 2)
-        {
-            for (int i = 0; i < 2; i++)
-                for (int j = 0; j < 15; j++)
-                    plansza[i, j] = genY[i, j];
-            for (int i = 2; i < 5; i++)
-                for (int j = 0; j < 15; j++)
-                    plansza[i, j] = genX[i, j];
-        }
-
-        if (numer == 3)
-        {
-            for (int i = 0; i < 2; i++)
-                for (int j = 0; j < 15; j++)
-                    plansza[i, j] = genX[i, j];
-            for (int i = 2; i < 5; i++)
-                for (int j = 0; j < 15; j++)
-                    plansza[i, j] = genY[i, j];
-        }
-
-        if (numer == 4)
-        {
-            for (int i = 0; i < 2; i++)
-                for (int j = 0; j < 8; j++)
-                    plansza[i, j] = genX[i, j];
-            for (int i = 0; i < 2; i++)
-                for (int j = 8; j < 15; j++)
-                    plansza[i, j] = genY[i, j];
-            for (int i = 2; i < 5; i++)
-                for (int j = 0; j < 8; j++)
-                    plansza[i, j] = genY[i, j];
-            for (int i = 2; i < 5; i++)
-                for (int j = 8; j < 15; j++)
-                    plansza[i, j] = genX[i, j];
-        }
-
-        if (numer == 4)
-        {
-            for (int i = 0; i < 2; i++)
-                for (int j = 0; j < 8; j++)
-                    plansza[i, j] = genY[i, j];
-            for (int i = 0; i < 2; i++)
-                for (int j = 8; j < 15; j++)
-                    plansza[i, j] = genX[i, j];
-            for (int i = 2; i < 5; i++)
-                for (int j = 0; j < 8; j++)
-                    plansza[i, j] = genX[i, j];
-            for (int i = 2; i < 5; i++)
-                for (int j = 8; j < 15; j++)
-                    plansza[i, j] = genY[i, j];
-        }
-
-        return plansza;
     }
 
     int[,] Mutacja(int[,]gen)
@@ -776,222 +645,135 @@ public class SpawnSmietniki : MonoBehaviour {
         int[,] gen2 = Generuj(plansza1);
         int[,] gen3 = Generuj(plansza1);
         int[,] gen4 = Generuj(plansza1);
-        int[,] gen5 = Generuj(plansza1);
 
         //ocena genów
-        int ocena1 = Filtr1(gen1) + Filtr2(gen1) + Filtr3(gen1) + Filtr4(gen1) + Filtr5(gen1) + Filtr6(gen1);
-        int ocena2 = Filtr1(gen2) + Filtr2(gen2) + Filtr3(gen2) + Filtr4(gen2) + Filtr5(gen2) + Filtr6(gen2);
-        int ocena3 = Filtr1(gen3) + Filtr2(gen3) + Filtr3(gen3) + Filtr4(gen3) + Filtr5(gen3) + Filtr6(gen3);
-        int ocena4 = Filtr1(gen4) + Filtr2(gen4) + Filtr3(gen4) + Filtr4(gen4) + Filtr5(gen4) + Filtr6(gen4);
-        int ocena5 = Filtr1(gen5) + Filtr2(gen5) + Filtr3(gen5) + Filtr4(gen5) + Filtr5(gen5) + Filtr6(gen5);
+        int ocena1 = Filtr1(gen1) + Filtr2(gen1, 1) + Filtr2(gen1, 2) + Filtr2(gen1, 3) + Filtr3(gen1) + Filtr4(gen1) + Filtr5(gen1);
+        int ocena2 = Filtr1(gen2) + Filtr2(gen2, 1) + Filtr2(gen2, 2) + Filtr2(gen2, 3) + Filtr3(gen2) + Filtr4(gen2) + Filtr5(gen2);
+        int ocena3 = Filtr1(gen3) + Filtr2(gen3, 1) + Filtr2(gen3, 2) + Filtr2(gen3, 3) + Filtr3(gen3) + Filtr4(gen3) + Filtr5(gen3);
+        int ocena4 = Filtr1(gen4) + Filtr2(gen4, 1) + Filtr2(gen4, 2) + Filtr2(gen4, 3) + Filtr3(gen4) + Filtr4(gen4) + Filtr5(gen4);
 
-        int[] tabela_ocen = { ocena1, ocena2, ocena3, ocena4, ocena5 };
+        int[] tabela_ocen = { ocena1, ocena2, ocena3, ocena4 };
         int ilosc_skrzyzowan = 0;
-        while (ilosc_skrzyzowan<10 && ocena1< ocena && ocena2 < ocena && ocena3 < ocena && ocena4 < ocena && ocena5 < ocena)
+        int max;
+        int numer;
+        int suma_ocen;
+        int[] szansa = new int[3];
+        int wybrany_osobnik1;
+        int wybrany_osobnik2;
+        while (ilosc_skrzyzowan<10 && ocena1< ocena && ocena2 < ocena && ocena3 < ocena && ocena4 < ocena)
         {
             
-            int max = ocena1;
-            int numer = 0;
+            max = ocena1;
+            numer = 0;
+            suma_ocen = ocena1 + ocena2 + ocena3 + ocena4;
+            for(int i=0; i<3; i++)
+                szansa[i] = tabela_ocen[i] / suma_ocen;
 
-            for (int i = 1; i < 5; i++)
-                if (max < tabela_ocen[i])
+            wybrany_osobnik1 = (int)Random.Range(1, 101);
+
+            if(wybrany_osobnik1<=szansa[0])
+            {
+                wybrany_osobnik2 = (int)Random.Range(szansa[0] + 1, 101);
+                if(wybrany_osobnik2<=szansa[0]+szansa[1])
                 {
-                    max = tabela_ocen[i];
-                    numer = i;
+                    gen3 = gen1;
+                    gen4 = Mutacja(gen1);
+                    Skrzyzowanie(gen1,gen2);
                 }
-            int max2;
-            int numer2;
-            if (numer == 0)
-            {
-                max2 = ocena2;
-                numer2 = 1;
-                for (int i = 2; i < 5; i++)
-                    if (max2 < tabela_ocen[i])
-                    {
-                        max2 = tabela_ocen[i];
-                        numer2 = i;
-                    }
-            }
-            else
-            {
-                max2 = ocena1;
-                numer2 = 0;
-                for (int i = 1; i < 5; i++)
-                    if (max2 < tabela_ocen[i] && numer != i)
-                    {
-                        max2 = tabela_ocen[i];
-                        numer2 = i;
-                    }
+                if (wybrany_osobnik2 > szansa[0]+szansa[1] && wybrany_osobnik2 <= szansa[0] + szansa[1]+szansa[2])
+                {
+                    gen2 = gen1;
+                    gen4 = Mutacja(gen1);
+                    Skrzyzowanie(gen1, gen3);
+                }
+                if (wybrany_osobnik2 > szansa[0] + szansa[1] + szansa[2])
+                {
+                    gen2 = gen1;
+                    gen3 = Mutacja(gen1);
+                    Skrzyzowanie(gen1, gen4);
+                }
             }
 
-            if (numer == 0 && numer2 == 1)
+            if (wybrany_osobnik1 > szansa[0] && wybrany_osobnik1 <= szansa[0]+szansa[1])
             {
-                gen4 = Mutacja(gen1);
-                gen3 = Mutacja(gen2);
-                gen5 = Skrzyzowanie(gen1, gen2);
-                gen2 = Mutacja(gen5);
+                wybrany_osobnik2 = (int)Random.Range(1, 101);
+                while(wybrany_osobnik2 > szansa[0] && wybrany_osobnik2 <= szansa[0] + szansa[1])
+                    wybrany_osobnik2 = (int)Random.Range(1, 101);
 
+                if (wybrany_osobnik2 <= szansa[0])
+                {
+                    gen3 = gen2;
+                    gen4 = Mutacja(gen2);
+                    Skrzyzowanie(gen2, gen1);
+                }
+                if (wybrany_osobnik2 > szansa[0] + szansa[1] && wybrany_osobnik2 <= szansa[0] + szansa[1] + szansa[2])
+                {
+                    gen1 = gen2;
+                    gen4 = Mutacja(gen2);
+                    Skrzyzowanie(gen2, gen3);
+                }
+                if (wybrany_osobnik2 > szansa[0] + szansa[1] + szansa[2])
+                {
+                    gen1 = gen2;
+                    gen3 = Mutacja(gen2);
+                    Skrzyzowanie(gen2, gen4);
+                }
             }
 
-            if (numer == 1 && numer2 == 0)
+            if (wybrany_osobnik1 > szansa[0] + szansa[1] && wybrany_osobnik1 <= szansa[0] + szansa[1] + szansa[2])
             {
-                gen4 = Mutacja(gen1);
-                gen3 = Mutacja(gen2);
-                gen5 = Skrzyzowanie(gen1, gen2);
-                gen1 = Mutacja(gen5);
+                wybrany_osobnik2 = (int)Random.Range(1, 101);
+                while (wybrany_osobnik1 > szansa[0] + szansa[1] && wybrany_osobnik1 <= szansa[0] + szansa[1] + szansa[2])
+                    wybrany_osobnik2 = (int)Random.Range(1, 101);
 
+                if (wybrany_osobnik2 <= szansa[0])
+                {
+                    gen2 = gen3;
+                    gen4 = Mutacja(gen3);
+                    Skrzyzowanie(gen3, gen1);
+                }
+                if (wybrany_osobnik2 > szansa[0] && wybrany_osobnik2 <= szansa[0] + szansa[1])
+                {
+                    gen1 = gen3;
+                    gen4 = Mutacja(gen3);
+                    Skrzyzowanie(gen3, gen2);
+                }
+                if (wybrany_osobnik2 > szansa[0] + szansa[1] + szansa[2])
+                {
+                    gen1 = gen3;
+                    gen2 = Mutacja(gen3);
+                    Skrzyzowanie(gen3, gen4);
+                }
             }
 
-            if (numer == 0 && numer2 == 2)
+            if (wybrany_osobnik1 > szansa[0] + szansa[1] + szansa[2])
             {
-                gen4 = Mutacja(gen1);
-                gen2 = Mutacja(gen3);
-                gen5 = Skrzyzowanie(gen1, gen3);
-                gen3 = Mutacja(gen5);
+                wybrany_osobnik2 = (int)Random.Range(1, szansa[0] + szansa[1] + szansa[2]) + 1;
 
+                if (wybrany_osobnik2 <= szansa[0])
+                {
+                    gen2 = gen4;
+                    gen3 = Mutacja(gen4);
+                    Skrzyzowanie(gen4, gen1);
+                }
+                if (wybrany_osobnik2 > szansa[0] && wybrany_osobnik2 <= szansa[0] + szansa[1])
+                {
+                    gen1 = gen4;
+                    gen3 = Mutacja(gen4);
+                    Skrzyzowanie(gen4, gen2);
+                }
+                if (wybrany_osobnik2 > szansa[0] + szansa[1] && wybrany_osobnik2 <= szansa[0] + szansa[1] + szansa[2])
+                {
+                    gen1 = gen4;
+                    gen2 = Mutacja(gen4);
+                    Skrzyzowanie(gen4, gen3);
+                }
             }
 
-            if (numer == 2 && numer2 == 0)
-            {
-                gen4 = Mutacja(gen1);
-                gen2 = Mutacja(gen3);
-                gen5 = Skrzyzowanie(gen1, gen3);
-                gen1 = Mutacja(gen5);
-
-            }
-
-            if (numer == 0 && numer2 == 3)
-            {
-                gen3 = Mutacja(gen1);
-                gen2 = Mutacja(gen4);
-                gen5 = Skrzyzowanie(gen1, gen4);
-                gen4 = Mutacja(gen5);
-            }
-
-            if (numer == 3 && numer2 == 0)
-            {
-                gen3 = Mutacja(gen1);
-                gen2 = Mutacja(gen4);
-                gen5 = Skrzyzowanie(gen1, gen4);
-                gen1 = Mutacja(gen5);
-            }
-
-            if (numer == 0 && numer2 == 4)
-            {
-                gen3 = Mutacja(gen1);
-                gen2 = Mutacja(gen5);
-                gen4 = Skrzyzowanie(gen1, gen5);
-                gen5 = Mutacja(gen4);
-            }
-
-            if (numer == 4 && numer2 == 0)
-            {
-                gen3 = Mutacja(gen1);
-                gen2 = Mutacja(gen5);
-                gen4 = Skrzyzowanie(gen1, gen5);
-                gen1 = Mutacja(gen4);
-            }
-
-            if (numer == 1 && numer2 == 2)
-            {
-                gen4 = Mutacja(gen2);
-                gen1 = Mutacja(gen3);
-                gen5 = Skrzyzowanie(gen2, gen3);
-                gen3 = Mutacja(gen5);
-            }
-
-            if (numer == 2 && numer2 == 1)
-            {
-                gen4 = Mutacja(gen2);
-                gen1 = Mutacja(gen3);
-                gen5 = Skrzyzowanie(gen2, gen3);
-                gen2 = Mutacja(gen5);
-            }
-
-            if (numer == 1 && numer2 == 3)
-            {
-                gen3 = Mutacja(gen2);
-                gen1 = Mutacja(gen4);
-                gen5 = Skrzyzowanie(gen2, gen4);
-                gen4 = Mutacja(gen5);
-            }
-
-            if (numer == 3 && numer2 == 1)
-            {
-                gen3 = Mutacja(gen2);
-                gen1 = Mutacja(gen4);
-                gen5 = Skrzyzowanie(gen2, gen4);
-                gen2 = Mutacja(gen5);
-            }
-
-            if (numer == 1 && numer2 == 4)
-            {
-                gen3 = Mutacja(gen2);
-                gen1 = Mutacja(gen5);
-                gen4 = Skrzyzowanie(gen2, gen5);
-                gen5 = Mutacja(gen4);
-            }
-
-            if (numer == 4 && numer2 == 1)
-            {
-                gen3 = Mutacja(gen2);
-                gen1 = Mutacja(gen5);
-                gen4 = Skrzyzowanie(gen2, gen5);
-                gen2 = Mutacja(gen4);
-            }
-
-            if (numer == 2 && numer2 == 3)
-            {
-                gen2 = Mutacja(gen3);
-                gen1 = Mutacja(gen4);
-                gen5 = Skrzyzowanie(gen3, gen4);
-                gen4 = Mutacja(gen5);
-            }
-
-            if (numer == 3 && numer2 == 2)
-            {
-                gen2 = Mutacja(gen3);
-                gen1 = Mutacja(gen4);
-                gen5 = Skrzyzowanie(gen3, gen4);
-                gen3 = Mutacja(gen5);
-            }
-
-            if (numer == 2 && numer2 == 4)
-            {
-                gen2 = Mutacja(gen3);
-                gen1 = Mutacja(gen5);
-                gen4 = Skrzyzowanie(gen3, gen5);
-                gen5 = Mutacja(gen4);
-            }
-
-            if (numer == 4 && numer2 == 2)
-            {
-                gen2 = Mutacja(gen3);
-                gen1 = Mutacja(gen5);
-                gen4 = Skrzyzowanie(gen3, gen5);
-                gen3 = Mutacja(gen4);
-            }
-
-            if (numer == 3 && numer2 == 4)
-            {
-                gen2 = Mutacja(gen4);
-                gen1 = Mutacja(gen5);
-                gen3 = Skrzyzowanie(gen4, gen5);
-                gen5 = Mutacja(gen3);
-            }
-
-            if (numer == 4 && numer2 == 3)
-            {
-                gen2 = Mutacja(gen4);
-                gen1 = Mutacja(gen5);
-                gen3 = Skrzyzowanie(gen4, gen5);
-                gen4 = Mutacja(gen3);
-            }
-
-            ocena1 = Filtr1(gen1) + Filtr2(gen1) + Filtr3(gen1) + Filtr4(gen1) + Filtr5(gen1) + Filtr6(gen1);
-            ocena2 = Filtr1(gen2) + Filtr2(gen2) + Filtr3(gen2) + Filtr4(gen2) + Filtr5(gen2) + Filtr6(gen2);
-            ocena3 = Filtr1(gen3) + Filtr2(gen3) + Filtr3(gen3) + Filtr4(gen3) + Filtr5(gen3) + Filtr6(gen3);
-            ocena4 = Filtr1(gen4) + Filtr2(gen4) + Filtr3(gen4) + Filtr4(gen4) + Filtr5(gen4) + Filtr6(gen4);
+            ocena1 = Filtr1(gen1) + Filtr2(gen1, 1) + Filtr2(gen1, 2) + Filtr2(gen1, 3) + Filtr3(gen1) + Filtr4(gen1) + Filtr5(gen1);
+            ocena2 = Filtr1(gen2) + Filtr2(gen2, 1) + Filtr2(gen2, 2) + Filtr2(gen2, 3) + Filtr3(gen2) + Filtr4(gen2) + Filtr5(gen2);
+            ocena3 = Filtr1(gen3) + Filtr2(gen3, 1) + Filtr2(gen3, 2) + Filtr2(gen3, 3) + Filtr3(gen3) + Filtr4(gen3) + Filtr5(gen3);
+            ocena4 = Filtr1(gen4) + Filtr2(gen4, 1) + Filtr2(gen4, 2) + Filtr2(gen4, 3) + Filtr3(gen4) + Filtr4(gen4) + Filtr5(gen4);
 
             tabela_ocen[0] = ocena1;
             tabela_ocen[1] = ocena2;
@@ -1001,36 +783,36 @@ public class SpawnSmietniki : MonoBehaviour {
             ilosc_skrzyzowan++;
         }
 
-        int[] tabela_ocen_ost = { ocena1, ocena2, ocena3, ocena4 };
-        int max_ost = ocena1;
-        int numer_ost = 0;
+        
+        max= ocena1;
+        numer = 0;
 
         for (int i = 1; i < 4; i++)
-            if (max_ost < tabela_ocen_ost[i])
+            if (max < tabela_ocen[i])
             {
-                max_ost = tabela_ocen_ost[i];
-                numer_ost = i;
+                max = tabela_ocen[i];
+                numer = i;
             }
 
 
-        if (numer_ost == 0)
+        if (numer == 0)
         {
             osobnik = gen1;
 
         }
 
-        if (numer_ost == 1)
+        if (numer == 1)
         {
             osobnik = gen2;
 
         }
 
-        if (numer_ost == 2)
+        if (numer == 2)
         {
             osobnik = gen3;
         }
 
-        if (numer_ost == 3)
+        if (numer == 3)
         {
             osobnik = gen4;
         }
