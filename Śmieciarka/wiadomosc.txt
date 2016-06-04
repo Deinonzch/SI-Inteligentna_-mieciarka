@@ -1,0 +1,92 @@
+start:
+3 0 0 0 2 48 15
+3 0 0 0 2 48 15
+3 0 0 0 2 48 15
+3 0 0 0 2 48 15
+Tabela ocen: 51 51 51 51
+Suma ocen: 204
+Wylosowany numer: 37
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 24
+Suma ocen: 204
+Wylosowany numer: 7
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 14
+Suma ocen: 204
+Wylosowany numer: 59
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 31
+Suma ocen: 204
+Wylosowany numer: 11
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 13
+Suma ocen: 204
+Wylosowany numer: 33
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 24
+Suma ocen: 204
+Wylosowany numer: 51
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 32
+Suma ocen: 204
+Wylosowany numer: 95
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 41
+Suma ocen: 204
+Wylosowany numer: 47
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 23
+Suma ocen: 204
+Wylosowany numer: 78
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 42
+Suma ocen: 204
+Wylosowany numer: 53
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 32
+Suma ocen: 204
+Wylosowany numer: 22
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 13
+Suma ocen: 204
+Wylosowany numer: 75
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 32
+Suma ocen: 204
+Wylosowany numer: 19
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 14
+Suma ocen: 204
+Wylosowany numer: 33
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 23
+Suma ocen: 204
+Wylosowany numer: 98
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 41
+Suma ocen: 204
+Wylosowany numer: 38
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 24
+Suma ocen: 201
+Wylosowany numer: 51
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 32
+Suma ocen: 198
+Wylosowany numer: 63
+szanse wylosowania: 25 22 25
+Wylosowane osobniki: 31
+Suma ocen: 200
+Wylosowany numer: 70
+szanse wylosowania: 25 25 23
+Wylosowane osobniki: 32
+Suma ocen: 196
+Wylosowany numer: 20
+szanse wylosowania: 23 26 23
+Wylosowane osobniki: 12
+
+3 0 0 0 2 48 15
+3 0 0 0 2 44 15
+3 0 0 0 2 44 15
+3 0 0 0 2 48 15
+Wybrany osobnik: 0
