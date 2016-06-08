@@ -58,6 +58,7 @@ public class MultipleAstarAI : MonoBehaviour
         Debug.Log("Yay, we got a path back. Did it have an error? " + p.error);
         if (!p.error)
         {
+
             path = p;
             //Reset the waypoint counter
             currentWaypoint = 0;
