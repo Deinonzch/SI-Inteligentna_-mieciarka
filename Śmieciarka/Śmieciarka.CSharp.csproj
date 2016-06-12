@@ -159,8 +159,14 @@
     <Compile Include="Assets\AstarPathfindingProject\Utilities\ProfileHelper.cs" />
     <Compile Include="Assets\AstarPathfindingProject\Utilities\UnityReferenceHelper.cs" />
     <Compile Include="Assets\AstarPathfindingProject\changelog.cs" />
+    <Compile Include="Assets\RefuseBins\Bins\BinOfAluminium.cs" />
+    <Compile Include="Assets\RefuseBins\Bins\BinOfGlass.cs" />
+    <Compile Include="Assets\RefuseBins\Bins\BinOfPaper.cs" />
+    <Compile Include="Assets\RefuseBins\Interfaces\IPropertiesOfBin.cs" />
     <Compile Include="Assets\DestroySmietnik.cs" />
     <Compile Include="Assets\MultipleAstarAI.cs" />
+    <Compile Include="Assets\RefuseBins\RefuseBins.cs" />
+    <Compile Include="Assets\RefuseBins\SelectorForBins\SelectorForBins.cs" />
     <Compile Include="Assets\SaveData.cs" />
     <Compile Include="Assets\SpawnSmietniki.cs" />
     <Compile Include="Assets\TrashGenerator\AllTrashs\KindOfTrash\Aluminium.cs" />

@@ -8,6 +8,8 @@ namespace Assets.TrashGenerator.AllTrashs.Interfaces {
           int Weight { set; get; }
           int AbilityOfCrushing { set; get; }
           int AbsorptionOfHeat { set; get; }
+          string TypeOfTrash { get; set; }
+          int SizeOfTrash { get; set; }
 
 
      }

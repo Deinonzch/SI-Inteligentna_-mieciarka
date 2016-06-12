@@ -9,7 +9,7 @@ using Assets.TrashGenerator.AllTrashs.Interfaces;
 namespace Assets.TrashGenerator.Generator {
 
      //In bottom file you have comment with info about scale of attributes of Trashs
-     public class TrashGenerator : IPropertiesOfTrash{
+     public class TrashGenerator : Trashs{
 
           private int _resultGenerator;
 
@@ -23,10 +23,11 @@ namespace Assets.TrashGenerator.Generator {
                this._attributeGenerator = new Random();
           }
 
-          public int Weight { set; get; }
-          public int AbilityOfCrushing { set; get; }
-          public int AbsorptionOfHeat { set; get; }
-
+          override public int Weight { set; get; }
+          override public int AbilityOfCrushing { set; get; }
+          override public int AbsorptionOfHeat { set; get; }
+          override public string TypeOfTrash { get; set; }
+          override public int SizeOfTrash { get; set; }
 
           public Trashs GetResult() {
 
@@ -34,24 +35,30 @@ namespace Assets.TrashGenerator.Generator {
 
                switch (_resultGenerator) {
                     case 1:
-                         Weight = _attributeGenerator.Next(4,8);
-                         AbilityOfCrushing = _attributeGenerator.Next(4, 8);
-                         AbsorptionOfHeat = _attributeGenerator.Next(6, 9);
-                         _successedTrash = new Aluminium(Weight, AbilityOfCrushing, AbsorptionOfHeat);
+                         Weight = _attributeGenerator.Next(4,9);
+                         AbilityOfCrushing = _attributeGenerator.Next(4, 9);
+                         AbsorptionOfHeat = _attributeGenerator.Next(6, 10);
+                         SizeOfTrash = _attributeGenerator.Next(3, 7);
+                         TypeOfTrash = "Aluminium";
+                         _successedTrash = new Aluminium(Weight, AbilityOfCrushing, AbsorptionOfHeat, TypeOfTrash);
                          break;
 
                     case 2:
-                         Weight = _attributeGenerator.Next(2, 4);
-                         AbilityOfCrushing = _attributeGenerator.Next(3, 5);
-                         AbsorptionOfHeat = _attributeGenerator.Next(4, 6);
-                         _successedTrash = new Glass(Weight, AbilityOfCrushing, AbsorptionOfHeat);
+                         Weight = _attributeGenerator.Next(2, 5);
+                         AbilityOfCrushing = _attributeGenerator.Next(3, 6);
+                         AbsorptionOfHeat = _attributeGenerator.Next(4, 7);
+                         SizeOfTrash = _attributeGenerator.Next(1, 4);
+                         TypeOfTrash = "Szklo";
+                         _successedTrash = new Glass(Weight, AbilityOfCrushing, AbsorptionOfHeat, TypeOfTrash);
                          break;
 
                     case 3:
-                         Weight = _attributeGenerator.Next(4, 8);
-                         AbilityOfCrushing = _attributeGenerator.Next(4, 8);
-                         AbsorptionOfHeat = _attributeGenerator.Next(7, 9);
-                         _successedTrash = new Paper();     
+                         Weight = _attributeGenerator.Next(4, 9);
+                         AbilityOfCrushing = _attributeGenerator.Next(4, 9);
+                         AbsorptionOfHeat = _attributeGenerator.Next(7, 10);
+                         SizeOfTrash = _attributeGenerator.Next(1, 3);
+                         TypeOfTrash = "Papier";
+                         _successedTrash = new Paper(Weight, AbilityOfCrushing, AbsorptionOfHeat, TypeOfTrash);     
                          break;
 
                     case 4:
