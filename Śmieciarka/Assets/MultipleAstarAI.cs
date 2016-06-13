@@ -9,19 +9,30 @@ using Assets.RefuseBins.SelectorForBins;
 using Assets.RefuseBins;
 using Assets.RefuseBins.Bins;
 using Assets.TrashGenerator.AllTrashs;
+using Assets.TrashGenerator.AllTrashs.KindOfTrash;
+using Assets.GarbageTruck;
+using Assets.DecisionTree;
 
 public class MultipleAstarAI : MonoBehaviour {
 
      public GameObject[] targets;
      public Vector3[] vectorTargets;
 
-     public Trashs[] _contentOfBin;
+     //Variables used to generate trash and to sort it through garbage track and finally dispaly it to user.
+     
      public Text _contentOfRefuseBin;
+     public Text _contentOfGarbageTruck;
      public TrashGenerator _trashGenerator;
      public BinOfAluminium _binOfAluminium;
      public BinOfGlass _binOfGlass;
      public BinOfPaper _binOfPaper;
-     
+     public Trashs[] _contentOfBin;
+     public GarbageTruck _garbageTruck;
+     public DecisionTree _decisionTree;
+     public int _currentAmountOfAluminium;
+     public int _currentAmountOfGlass;
+     public int _currentAmountOfPaper;
+     //
 
      private Seeker seeker;
      private bool pathComplete;
@@ -228,46 +239,109 @@ public class MultipleAstarAI : MonoBehaviour {
      public void OnDisable() {
           seeker.pathCallback -= OnPathComplete;
      }
+     //Mehtod used to display content of bins and garbage truck.
+     public void DisplayContentBin(RefuseBins bin) {
 
-     public void Update(RefuseBins bin ) {
-          
-          _contentOfRefuseBin.text = ("Zawartość kosza: " + "\n"+ 
+          _contentOfRefuseBin.text = ("Zawartość kosza: " + "\n" +
                bin.ContentOfBin[0].TypeOfTrash + "\n" +
                bin.ContentOfBin[1].TypeOfTrash + "\n" +
                bin.ContentOfBin[2].TypeOfTrash + "\n" +
                bin.ContentOfBin[3].TypeOfTrash + "\n" +
                bin.ContentOfBin[4].TypeOfTrash + "\n");
-          
+
      }
 
+     public void DisplayConentOfGarbageTruck(GarbageTruck garbageTruck) {
+          _currentAmountOfAluminium = _currentAmountOfAluminium + garbageTruck.CurrentStateStorageForAluminium();
+          _currentAmountOfGlass = _currentAmountOfGlass + garbageTruck.CurrentStateStorageForGlass();
+          _currentAmountOfPaper = _currentAmountOfPaper + garbageTruck.CurrentStateStorageForPaper();
+
+          _contentOfGarbageTruck.text = ("Zawartość śmieciarki: " + "\n" +
+               "Aluminium: " + _currentAmountOfAluminium + "\n" + 
+               "Szklo: " + _currentAmountOfGlass + "\n" + 
+               "Papier: " + _currentAmountOfPaper);
+     }
+
+     //Event which react on colision between specific bin and garbage truck.
      void OnTriggerEnter2D(Collider2D coll) {
+
           _trashGenerator = new TrashGenerator();
+          _garbageTruck = new GarbageTruck();
+          _decisionTree = new DecisionTree();
 
           if (coll.name.StartsWith("SmietnikAluminium")){
                _binOfAluminium = new BinOfAluminium();
-
-               
-               
 
                while (_binOfAluminium.AmountOfEmptySpaceOfBin()) {
                     _binOfAluminium.AddTrashToBin(_trashGenerator.GetResult());
                }
 
-               Update(_binOfAluminium);
-               
+               for(int index = 0; index < _binOfAluminium.ContentOfBin.Length; index++) {
+                    if(_decisionTree.CheckWeight(_binOfAluminium.ContentOfBin[index]) == "NextTest") {
+                         if(_decisionTree.CheckAbilityOfCrushing(_binOfAluminium.ContentOfBin[index]) == "NextTest") {
+                              if (_decisionTree.CheckAbsorptionOfHeat(_binOfAluminium.ContentOfBin[index]) == "Paper")
+                                   _garbageTruck.AddTrashToGarbageTruck("Paper", _binOfAluminium.ContentOfBin[index]);
+                              else if (_decisionTree.CheckAbsorptionOfHeat(_binOfAluminium.ContentOfBin[index]) == "Glass")
+                                   _garbageTruck.AddTrashToGarbageTruck("Glass", _binOfAluminium.ContentOfBin[index]);
+                              else
+                                   _garbageTruck.AddTrashToGarbageTruck("Aluminium", _binOfAluminium.ContentOfBin[index]);
 
+                         }
+                         else if(_decisionTree.CheckAbilityOfCrushing(_binOfAluminium.ContentOfBin[index]) == "Paper") {
+                              _garbageTruck.AddTrashToGarbageTruck("Paper", _binOfAluminium.ContentOfBin[index]);
+                         } else {
+                              _garbageTruck.AddTrashToGarbageTruck("Aluminium", _binOfAluminium.ContentOfBin[index]);
+                         }
+
+                    }
+                    else if(_decisionTree.CheckWeight(_binOfAluminium.ContentOfBin[index]) == "Paper"){
+                         _garbageTruck.AddTrashToGarbageTruck("Paper", _binOfAluminium.ContentOfBin[index]);
+                    } else {
+                         _garbageTruck.AddTrashToGarbageTruck("Aluminium", _binOfAluminium.ContentOfBin[index]);
+                    }
+
+               }
+
+               DisplayConentOfGarbageTruck(_garbageTruck);
+               DisplayContentBin(_binOfAluminium);
                Destroy(coll.gameObject);
           }
+
           if (coll.name.StartsWith("SmietnikPapier")) {
                _binOfPaper = new BinOfPaper();
 
                while (_binOfPaper.AmountOfEmptySpaceOfBin()) {
                    _binOfPaper.AddTrashToBin(_trashGenerator.GetResult());
                }
+               for (int index = 0; index < _binOfPaper.ContentOfBin.Length; index++) {
+                    if (_decisionTree.CheckWeight(_binOfPaper.ContentOfBin[index]) == "NextTest") {
+                         if (_decisionTree.CheckAbilityOfCrushing(_binOfPaper.ContentOfBin[index]) == "NextTest") {
+                              if (_decisionTree.CheckAbsorptionOfHeat(_binOfPaper.ContentOfBin[index]) == "Paper")
+                                   _garbageTruck.AddTrashToGarbageTruck("Paper", _binOfPaper.ContentOfBin[index]);
+                              else if (_decisionTree.CheckAbsorptionOfHeat(_binOfPaper.ContentOfBin[index]) == "Glass")
+                                   _garbageTruck.AddTrashToGarbageTruck("Glass", _binOfPaper.ContentOfBin[index]);
+                              else
+                                   _garbageTruck.AddTrashToGarbageTruck("Aluminium", _binOfPaper.ContentOfBin[index]);
 
-               Update(_binOfPaper);
+                         } else if (_decisionTree.CheckAbilityOfCrushing(_binOfPaper.ContentOfBin[index]) == "Paper") {
+                              _garbageTruck.AddTrashToGarbageTruck("Paper", _binOfPaper.ContentOfBin[index]);
+                         } else {
+                              _garbageTruck.AddTrashToGarbageTruck("Aluminium", _binOfPaper.ContentOfBin[index]);
+                         }
+
+                    } else if (_decisionTree.CheckWeight(_binOfPaper.ContentOfBin[index]) == "Paper") {
+                         _garbageTruck.AddTrashToGarbageTruck("Paper", _binOfPaper.ContentOfBin[index]);
+                    } else {
+                         _garbageTruck.AddTrashToGarbageTruck("Aluminium", _binOfPaper.ContentOfBin[index]);
+                    }
+
+               }
+
+               DisplayConentOfGarbageTruck(_garbageTruck);
+               DisplayContentBin(_binOfPaper);
                Destroy(coll.gameObject);
           }
+
           if ( coll.name.StartsWith("SmietnikPlastik")) {
                _binOfGlass = new BinOfGlass();
 
@@ -275,8 +349,34 @@ public class MultipleAstarAI : MonoBehaviour {
                     _binOfGlass.AddTrashToBin(_trashGenerator.GetResult());
                }
 
-               Update(_binOfGlass);
+               for (int index = 0; index < _binOfGlass.ContentOfBin.Length; index++) {
+                    if (_decisionTree.CheckWeight(_binOfGlass.ContentOfBin[index]) == "NextTest") {
+                         if (_decisionTree.CheckAbilityOfCrushing(_binOfGlass.ContentOfBin[index]) == "NextTest") {
+                              if (_decisionTree.CheckAbsorptionOfHeat(_binOfGlass.ContentOfBin[index]) == "Paper")
+                                   _garbageTruck.AddTrashToGarbageTruck("Paper", _binOfGlass.ContentOfBin[index]);
+                              else if (_decisionTree.CheckAbsorptionOfHeat(_binOfGlass.ContentOfBin[index]) == "Glass")
+                                   _garbageTruck.AddTrashToGarbageTruck("Glass", _binOfGlass.ContentOfBin[index]);
+                              else
+                                   _garbageTruck.AddTrashToGarbageTruck("Aluminium", _binOfGlass.ContentOfBin[index]);
+
+                         } else if (_decisionTree.CheckAbilityOfCrushing(_binOfGlass.ContentOfBin[index]) == "Paper") {
+                              _garbageTruck.AddTrashToGarbageTruck("Paper", _binOfGlass.ContentOfBin[index]);
+                         } else {
+                              _garbageTruck.AddTrashToGarbageTruck("Aluminium", _binOfGlass.ContentOfBin[index]);
+                         }
+
+                    } else if (_decisionTree.CheckWeight(_binOfGlass.ContentOfBin[index]) == "Paper") {
+                         _garbageTruck.AddTrashToGarbageTruck("Paper", _binOfGlass.ContentOfBin[index]);
+                    } else {
+                         _garbageTruck.AddTrashToGarbageTruck("Aluminium", _binOfGlass.ContentOfBin[index]);
+                    }
+
+               }
+
+               DisplayConentOfGarbageTruck(_garbageTruck);
+               DisplayContentBin(_binOfGlass);
                Destroy(coll.gameObject);
           }
      }
 }
+

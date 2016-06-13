@@ -35,9 +35,9 @@ namespace Assets.TrashGenerator.Generator {
 
                switch (_resultGenerator) {
                     case 1:
-                         Weight = _attributeGenerator.Next(4,9);
-                         AbilityOfCrushing = _attributeGenerator.Next(4, 9);
-                         AbsorptionOfHeat = _attributeGenerator.Next(6, 10);
+                         Weight = _attributeGenerator.Next(4,11);
+                         AbilityOfCrushing = _attributeGenerator.Next(4, 11);
+                         AbsorptionOfHeat = _attributeGenerator.Next(7, 11);
                          SizeOfTrash = _attributeGenerator.Next(3, 7);
                          TypeOfTrash = "Aluminium";
                          _successedTrash = new Aluminium(Weight, AbilityOfCrushing, AbsorptionOfHeat, TypeOfTrash);
@@ -53,9 +53,9 @@ namespace Assets.TrashGenerator.Generator {
                          break;
 
                     case 3:
-                         Weight = _attributeGenerator.Next(4, 9);
-                         AbilityOfCrushing = _attributeGenerator.Next(4, 9);
-                         AbsorptionOfHeat = _attributeGenerator.Next(7, 10);
+                         Weight = _attributeGenerator.Next(1, 4);
+                         AbilityOfCrushing = _attributeGenerator.Next(1, 4);
+                         AbsorptionOfHeat = _attributeGenerator.Next(1, 4);
                          SizeOfTrash = _attributeGenerator.Next(1, 3);
                          TypeOfTrash = "Papier";
                          _successedTrash = new Paper(Weight, AbilityOfCrushing, AbsorptionOfHeat, TypeOfTrash);     
