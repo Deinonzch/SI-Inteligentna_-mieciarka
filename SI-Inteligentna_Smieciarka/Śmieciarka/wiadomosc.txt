@@ -1,0 +1,92 @@
+start:
+4 0 -2 0 4 43 60
+4 0 -2 0 4 43 60
+4 0 -2 0 4 43 60
+4 0 -2 0 4 43 60
+Tabela ocen: 45 45 45 45
+Suma ocen: 180
+Wylosowany numer: 2
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 14
+Suma ocen: 180
+Wylosowany numer: 29
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 21
+Suma ocen: 180
+Wylosowany numer: 4
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 13
+Suma ocen: 180
+Wylosowany numer: 17
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 12
+Suma ocen: 180
+Wylosowany numer: 49
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 24
+Suma ocen: 175
+Wylosowany numer: 14
+szanse wylosowania: 25 22 25
+Wylosowane osobniki: 13
+Suma ocen: 180
+Wylosowany numer: 31
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 24
+Suma ocen: 186
+Wylosowany numer: 28
+szanse wylosowania: 25 24 24
+Wylosowane osobniki: 21
+Suma ocen: 186
+Wylosowany numer: 74
+szanse wylosowania: 24 25 24
+Wylosowane osobniki: 43
+Suma ocen: 186
+Wylosowany numer: 56
+szanse wylosowania: 25 24 24
+Wylosowane osobniki: 31
+Suma ocen: 186
+Wylosowany numer: 92
+szanse wylosowania: 25 24 24
+Wylosowane osobniki: 41
+Suma ocen: 192
+Wylosowany numer: 30
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 21
+Suma ocen: 192
+Wylosowany numer: 99
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 42
+Suma ocen: 192
+Wylosowany numer: 89
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 41
+Suma ocen: 192
+Wylosowany numer: 39
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 24
+Suma ocen: 192
+Wylosowany numer: 12
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 13
+Suma ocen: 192
+Wylosowany numer: 47
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 23
+Suma ocen: 192
+Wylosowany numer: 6
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 13
+Suma ocen: 192
+Wylosowany numer: 91
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 41
+Suma ocen: 192
+Wylosowany numer: 67
+szanse wylosowania: 25 25 25
+Wylosowane osobniki: 32
+
+3 0 -2 0 4 47 60
+3 0 -2 0 4 47 60
+3 0 -2 0 4 47 60
+3 0 -2 0 4 47 60
+Wybrany osobnik: 1
