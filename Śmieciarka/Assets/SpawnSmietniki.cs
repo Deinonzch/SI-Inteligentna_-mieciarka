@@ -495,7 +495,7 @@ public class SpawnSmietniki : MonoBehaviour {
     int[] AlgorythmGenetic()
     {
         // This is the name of the file holding the data. You can use any file extension you like.
-        string fileName = "C:\\Users\\Sławomir\\Desktop\\SI-Inteligentna_Smieciarka-Algorytm_Genetyczny\\Śmieciarka\\dataOsobniki.cjc";
+        string fileName = "C:\\Users\\user\\Documents\\GitHub\\SI-Inteligentna_Smieciarka\\Śmieciarka\\dataOsobniki.cjc";
 
         // Use a BinaryFormatter or SoapFormatter.
         IFormatter formatter = new BinaryFormatter();
@@ -839,7 +839,7 @@ public class SpawnSmietniki : MonoBehaviour {
         }
         wiadomosc = wiadomosc + "Wybrany osobnik: " + numer;
         string[] wiadomoscie = { wiadomosc };
-        System.IO.File.WriteAllLines("C:\\Users\\Sławomir\\Desktop\\SI-Inteligentna_Smieciarka-Algorytm_Genetyczny\\Śmieciarka\\wiadomosc.txt", wiadomoscie);
+        System.IO.File.WriteAllLines("C:\\Users\\user\\Documents\\GitHub\\SI-Inteligentna_Smieciarka\\Śmieciarka\\wiadomosc.txt", wiadomoscie);
         return osobnik;
     }
 }
